@@ -11,8 +11,9 @@ class UsuarioDAO{
         $email = $dados['email'];
         $senha = $dados['senha'];
         $imagem = Util::salvarArquivo();
+        $localizacao = $dados['localizacao'];
 
-        $sql = "insert into usuarios (nome, email, senha, imagem) values (:nome, :email, :senha, :imagem)";
+        $sql = "insert into usuarios (nome, email, senha, imagem, localizacao) values (:nome, :email, :senha, :imagem, :localizacao)";
         $stmt = $conexao->prepare($sql);
 
         $stmt->bindParam(':nome', $nome);
@@ -20,7 +21,7 @@ class UsuarioDAO{
         $senhaCriptografada = md5($senha);
         $stmt->bindParam(':senha', $senhaCriptografada);
         $stmt->bindParam(':imagem', $imagem);
-
+        $stmt->bindParam(':localizacao', $localizacao);
         $stmt->execute();
     }
 
