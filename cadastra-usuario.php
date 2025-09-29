@@ -1,6 +1,6 @@
 <?php
     session_start();
-    require "src/UsuarioDAO.php";
+    require_once "src/UsuarioDAO.php";
         
     UsuarioDAO::cadastrarUsuario($_POST);
     $_SESSION['msg'] = "Usuário cadastrado com sucesso!";

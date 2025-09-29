@@ -1,6 +1,6 @@
 <?php
     session_start();
-    require "src/UsuarioDAO.php";
+    require_once "src/UsuarioDAO.php";
 
     if (UsuarioDAO::validarUsuario($_POST)){    
         $_SESSION['email'] = $_POST ['email'];
