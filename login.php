@@ -34,7 +34,6 @@
             <h4 class="mb-4 text-center">Login</h4>
 
             <?php
-                // Lógica PHP para exibir mensagens de sessão
                 session_start();
                 if (isset($_SESSION['msg'])) {
                     echo '<div class="alert alert-danger" role="alert">';

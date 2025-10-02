@@ -6,7 +6,6 @@
    #A97452 - Marrom
 */
 
-/* Reset e configurações globais */
 body {
   background-color: #f5ebdd;
   color: #7b7d7d;
@@ -16,7 +15,7 @@ body {
   flex-direction: column;
 }
 
-/* Navbar */
+
 .navbar {
   background-color: #c0392b;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -38,7 +37,7 @@ body {
   color: #e88da0;
 }
 
-/* Conteúdo Principal */
+
 main {
   flex: 1;
 }
@@ -58,7 +57,7 @@ h2 {
   font-size: 1.2rem;
 }
 
-/* Formulários */
+
 .form-label {
   color: #a97452;
   font-weight: 600;
@@ -82,7 +81,7 @@ h2 {
   opacity: 0.6;
 }
 
-/* Botões */
+
 .btn-primary {
   background-color: #c0392b;
   border-color: #c0392b;
@@ -111,7 +110,7 @@ h2 {
   font-size: 1.1rem;
 }
 
-/* Footer */
+
 footer {
   background-color: #c0392b;
   color: #f5ebdd;
@@ -122,7 +121,7 @@ footer p {
   color: #f5ebdd;
 }
 
-/* Container do formulário */
+
 form {
   background-color: #ffffff;
   padding: 2rem;
@@ -131,7 +130,7 @@ form {
   border: 2px solid #e88da0;
 }
 
-/* Página de boas-vindas simples */
+
 body h1 {
   color: #c0392b;
   text-align: center;
