@@ -1,0 +1,145 @@
+/* Paleta de Cores:
+   #7B7D7D - Cinza
+   #C0392B - Vermelho
+   #E88DA0 - Rosa
+   #F5EBDD - Bege/Creme
+   #A97452 - Marrom
+*/
+
+/* Reset e configurações globais */
+body {
+  background-color: #f5ebdd;
+  color: #7b7d7d;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Navbar */
+.navbar {
+  background-color: #c0392b;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+  color: #f5ebdd;
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.nav-link {
+  color: #f5ebdd;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: #e88da0;
+}
+
+/* Conteúdo Principal */
+main {
+  flex: 1;
+}
+
+h1,
+h2 {
+  color: #c0392b;
+  font-weight: bold;
+}
+
+.display-4 {
+  color: #c0392b;
+}
+
+.lead {
+  color: #7b7d7d;
+  font-size: 1.2rem;
+}
+
+/* Formulários */
+.form-label {
+  color: #a97452;
+  font-weight: 600;
+}
+
+.form-control {
+  border: 2px solid #e88da0;
+  background-color: #ffffff;
+  color: #7b7d7d;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-control:focus {
+  border-color: #c0392b;
+  box-shadow: 0 0 0 0.2rem rgba(192, 57, 43, 0.25);
+  background-color: #ffffff;
+}
+
+.form-control::placeholder {
+  color: #7b7d7d;
+  opacity: 0.6;
+}
+
+/* Botões */
+.btn-primary {
+  background-color: #c0392b;
+  border-color: #c0392b;
+  color: #f5ebdd;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #a97452;
+  border-color: #a97452;
+  color: #f5ebdd;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.btn-primary:focus,
+.btn-primary:active {
+  background-color: #a97452;
+  border-color: #a97452;
+  box-shadow: 0 0 0 0.2rem rgba(169, 116, 82, 0.5);
+}
+
+.btn-lg {
+  padding: 0.75rem 2rem;
+  font-size: 1.1rem;
+}
+
+/* Footer */
+footer {
+  background-color: #c0392b;
+  color: #f5ebdd;
+  margin-top: auto;
+}
+
+footer p {
+  color: #f5ebdd;
+}
+
+/* Container do formulário */
+form {
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border: 2px solid #e88da0;
+}
+
+/* Página de boas-vindas simples */
+body h1 {
+  color: #c0392b;
+  text-align: center;
+  margin-top: 3rem;
+  font-size: 2.5rem;
+}
+
+.logo{
+  width: 150px;
+  height: 150px;
+}
