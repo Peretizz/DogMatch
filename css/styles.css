@@ -8,8 +8,6 @@
 body {
   background-color: #d4ebf8;
   color: #0a3981;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
@@ -168,13 +166,7 @@ body h1 {
   object-fit: contain;
 }
 
-/* Custom Color Palette:
-   #D4EBF8 - Light Blue
-   #1F509A - Medium Blue
-   #0A3981 - Dark Blue
-   #E38E49 - Orange
-*/
-.orm-group {
+.form-group {
   margin-bottom: 1.5rem;
 }
 
@@ -189,24 +181,12 @@ body h1 {
   min-width: 200px;
 }
 
-/* Custom Color Palette:
-   #D4EBF8 - Light Blue
-   #1F509A - Medium Blue
-   #0A3981 - Dark Blue
-   #E38E49 - Orange
-*/
-.ontainer {
+.container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 1rem;
 }
 
-/* Custom Color Palette:
-   #D4EBF8 - Light Blue
-   #1F509A - Medium Blue
-   #0A3981 - Dark Blue
-   #E38E49 - Orange
-*/
 .tn-group {
   display: flex;
   gap: 0.5rem;
