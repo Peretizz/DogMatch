@@ -32,8 +32,12 @@ class UsuarioDAO{
         $stmt->bindParam(1, $dados['email']);
         $stmt->bindParam(2, $senhaCriptografada);
         $stmt->execute();
-        
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($stmt->rowCount() > 0) {
+            return $usuario['idusuario'];
+        }else {
+            return false;
+        }
     }
      public static function listar()
     {

@@ -2,7 +2,7 @@
    #D4EBF8 
    #1F509A 
    #0A3981 
-   #E38E49 
+   #FFAE00 
 */
 
 body {
@@ -11,11 +11,14 @@ body {
   display: flex;
   flex-direction: column;
 }
-
+  
 .navbar {
   background-color: #1f509a;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 1rem;
+  height: 100px; /* Altura fixa para a navbar */
+  display: flex;
+  align-items: center; /* Centraliza o conteúdo verticalmente */
 }
 
 .navbar-brand {
@@ -34,7 +37,7 @@ body {
 
 .nav-link:hover,
 .nav-link.active {
-  color: #e38e49;
+  color: #FFAE00;
 }
 
 main {
@@ -110,8 +113,8 @@ h2 {
 }
 
 .btn-primary:hover {
-  background-color: #e38e49;
-  border-color: #e38e49;
+  background-color: #FFAE00;
+  border-color: #FFAE00;
   color: #ffffff;
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -119,8 +122,8 @@ h2 {
 
 .btn-primary:focus,
 .btn-primary:active {
-  background-color: #e38e49;
-  border-color: #e38e49;
+  background-color: #FFAE00;
+  border-color: #FFAE00;
   box-shadow: 0 0 0 0.2rem rgba(227, 142, 73, 0.5);
   outline: none;
 }
@@ -153,6 +156,7 @@ form {
   margin: 0 auto;
 }
 
+
 body h1 {
   color: #1f509a;
   text-align: center;
@@ -161,10 +165,11 @@ body h1 {
 }
 
 .logo {
-  width: 150px;
-  height: 150px;
+  width: 150px;  /* Aumenta a largura da logo */
+  height: 150px; /* Aumenta a altura da logo */
   object-fit: contain;
 }
+
 
 .form-group {
   margin-bottom: 1.5rem;

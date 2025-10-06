@@ -30,7 +30,7 @@
             </div>
         </div>
     </nav>
-
+    
     <main class="container text-center my-5">
         <h1>Seja bem-vindo(a)!</h1>
         <p class="lead">Aqui estará o conteúdo exclusivo da área logada.</p>
