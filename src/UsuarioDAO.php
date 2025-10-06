@@ -35,5 +35,15 @@ class UsuarioDAO{
         
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+     public static function listar()
+    {
+        $conexao = ConexaoBD::conectar();
+        $sql = "select * from usuarios";
+
+        $stmt = $conexao->prepare($sql);
+        $stmt->execute();
+        $filmes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $filmes;
+    }
 }
 ?>

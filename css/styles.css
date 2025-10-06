@@ -1,107 +1,130 @@
-/* Paleta de Cores:
-   #D4EBF8
-   #1F509A
-   #0A3981
-   #E38E49
+/* Paleta:
+   #D4EBF8 
+   #1F509A 
+   #0A3981 
+   #E38E49 
 */
 
 body {
-  background-color: #f5ebdd;
-  color: #7b7d7d;
+  background-color: #d4ebf8;
+  color: #0a3981;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
-
 .navbar {
-  background-color: #c0392b;
+  background-color: #1f509a;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
 }
 
 .navbar-brand {
-  color: #f5ebdd;
+  color: #d4ebf8;
   font-weight: bold;
   font-size: 1.5rem;
+  text-decoration: none;
 }
 
 .nav-link {
-  color: #f5ebdd;
+  color: #d4ebf8;
   transition: color 0.3s ease;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
 }
 
 .nav-link:hover,
 .nav-link.active {
-  color: #e88da0;
+  color: #e38e49;
 }
-
 
 main {
   flex: 1;
+  padding: 2rem;
 }
 
 h1,
 h2 {
-  color: #c0392b;
+  color: #1f509a;
   font-weight: bold;
 }
 
 .display-4 {
-  color: #c0392b;
+  color: #1f509a;
 }
 
 .lead {
-  color: #7b7d7d;
+  color: #0a3981;
   font-size: 1.2rem;
 }
 
-
 .form-label {
-  color: #a97452;
+  color: #0a3981;
   font-weight: 600;
+  display: block;
+  margin-bottom: 0.5rem;
 }
 
 .form-control {
-  border: 2px solid #e88da0;
+  border: 2px solid #1f509a;
   background-color: #ffffff;
-  color: #7b7d7d;
+  color: #0a3981;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.375rem;
+  width: 100%;
+  max-width: 100%;
+  font-size: 1rem;
 }
 
 .form-control:focus {
-  border-color: #c0392b;
-  box-shadow: 0 0 0 0.2rem rgba(192, 57, 43, 0.25);
+  border-color: #0a3981;
+  box-shadow: 0 0 0 0.2rem rgba(31, 80, 154, 0.25);
   background-color: #ffffff;
+  outline: none;
 }
 
 .form-control::placeholder {
-  color: #7b7d7d;
+  color: #0a3981;
   opacity: 0.6;
 }
 
+.search {
+  background-color: #1f509a;
+  color: white;
+}
 
 .btn-primary {
-  background-color: #c0392b;
-  border-color: #c0392b;
-  color: #f5ebdd;
+  background-color: #1f509a;
+  border: 2px solid #1f509a;
+  color: #d4ebf8;
   font-weight: 600;
   transition: all 0.3s ease;
+  padding: 0.5rem 1.5rem;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  font-size: 1rem;
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+  width: auto;
 }
 
 .btn-primary:hover {
-  background-color: #a97452;
-  border-color: #a97452;
-  color: #f5ebdd;
+  background-color: #e38e49;
+  border-color: #e38e49;
+  color: #ffffff;
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .btn-primary:focus,
 .btn-primary:active {
-  background-color: #a97452;
-  border-color: #a97452;
-  box-shadow: 0 0 0 0.2rem rgba(169, 116, 82, 0.5);
+  background-color: #e38e49;
+  border-color: #e38e49;
+  box-shadow: 0 0 0 0.2rem rgba(227, 142, 73, 0.5);
+  outline: none;
 }
 
 .btn-lg {
@@ -109,35 +132,87 @@ h2 {
   font-size: 1.1rem;
 }
 
-
 footer {
-  background-color: #c0392b;
-  color: #f5ebdd;
+  background-color: #1f509a;
+  color: #d4ebf8;
   margin-top: auto;
+  padding: 1.5rem;
+  text-align: center;
 }
 
 footer p {
-  color: #f5ebdd;
+  color: #d4ebf8;
+  margin: 0;
 }
-
 
 form {
   background-color: #ffffff;
   padding: 2rem;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  border: 2px solid #e88da0;
+  border: 2px solid #1f509a;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
-
 body h1 {
-  color: #c0392b;
+  color: #1f509a;
   text-align: center;
   margin-top: 3rem;
   font-size: 2.5rem;
 }
 
-.logo{
+.logo {
   width: 150px;
   height: 150px;
+  object-fit: contain;
+}
+
+/* Custom Color Palette:
+   #D4EBF8 - Light Blue
+   #1F509A - Medium Blue
+   #0A3981 - Dark Blue
+   #E38E49 - Orange
+*/
+.orm-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-row {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.form-row > * {
+  flex: 1;
+  min-width: 200px;
+}
+
+/* Custom Color Palette:
+   #D4EBF8 - Light Blue
+   #1F509A - Medium Blue
+   #0A3981 - Dark Blue
+   #E38E49 - Orange
+*/
+.ontainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Custom Color Palette:
+   #D4EBF8 - Light Blue
+   #1F509A - Medium Blue
+   #0A3981 - Dark Blue
+   #E38E49 - Orange
+*/
+.tn-group {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.btn-group .btn-primary {
+  flex: 0 0 auto;
 }
