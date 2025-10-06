@@ -8,6 +8,22 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="css/styles.css">
+    <style>
+        html, body {
+            height: 100%;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+        main {
+            flex-grow: 1; /* Permite que o main ocupe o espaço restante */
+        }
+        /* Esta regra em 'styles.css' também deve ser verificada e ajustada */
+        .login-container {
+            min-height: 450px; /* **OPCIONAL:** Define uma altura mínima para o formulário */
+        }
+    </style>
 </head>
 
 <body>
@@ -31,53 +47,36 @@
         </div>
     </nav>
 
-    <main class="container d-flex justify-content-center align-items-center my-5">
-        <div class="row col-12">
-            <div class="col-3">
-                <img src="img/fundo.png" alt="">
+    <main class="container d-flex justify-content-center align-items-center my-5 flex-grow-1">
+        <div class="row col-12 align-items-center justify-content-center">
+            <div class="fundo col-5 text-center">
+                <img src="img/fundo.png" alt="" class="img-fluid">
             </div>
-            <form action="efetua-login.php" method="post" class="login-container border rounded p-4  col-4">
-                <h4 class="mb-4 text-center">Login</h4>
-
-                <?php
-                session_start();
-                if (isset($_SESSION['msg'])) {
-                    echo '<div class="alert alert-danger" role="alert">';
-                    echo $_SESSION['msg'];
-                    unset($_SESSION['msg']);
-                    echo '</div>';
-                } else {
-                    echo '<div class="alert alert-info" role="alert">';
-                    echo 'Informe seu email e senha para entrar.';
-                    echo '</div>';
-                }
-                ?>
-
-                <div class="mb-3">
+            <form action="efetua-login.php" method="post" class="login-container rounded-4 p-4 py-5 col-5">
+                <div class="auras">
+                <span class="aura1 mb-4 text-center">Dog</span>
+                <span class="aura2 mb-4 text-center">Match</span>
+                </div>
+                <div class="mb-4">
                     <label for="email" class="form-label">Email</label>
-                    <input type="email" id="email" name="email" class="form-control" required>
+                    <input type="email" id="email" name="email" placeholder="Digite seu Usuário" class="form-control" required>
                 </div>
 
-                <div class="mb-3">
+                <div class="mb-4">
                     <label for="senha" class="form-label">Senha</label>
-                    <input type="password" id="senha" name="senha" class="form-control" required>
+                    <input type="password" id="senha" name="senha" placeholder="Digite sua Senha" class="form-control" required>
                 </div>
 
-                <div class="d-grid gap-2">
+                <div class="d-grid gap-2 mt-5   ">
                     <button type="submit" class="btn btn-primary">Entrar</button>
                 </div>
 
-                <div class="text-center mt-3">
-                    <a href="form-cadastra-usuario.html">Ainda não sou usuário</a>
+                <div class="receba text-center mt-5">
+                    <a style="color:#ffffff">Não tem conta? </a><a href="form-cadastra-usuario.html" style="color: #DE720D">CADASTRE-SE</a> 
                 </div>
             </form>
         </div>
     </main>
-
-    <footer class="text-white text-center py-3 mt-auto">
-        <p class="mb-0">&copy; 2025 - DogMatch. Todos os direitos reservados. | Desenvolvido por André Nascimento, Bruno
-            Falchetti e Nicolas Pereti</p>
-    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
