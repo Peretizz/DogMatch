@@ -24,11 +24,11 @@ include "incs/valida-sessao.php";
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <i class="bi bi-person-circle" style="color: #d4ebf8; font-size: 1.5rem;"></i>
-            </button>
+            </button>   
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="#">Início</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Sobre</a></li>
+                    <li class="nav-item"><a class="nav-link" href="perfil.php">Perfil</a></li>
+                    <li class="nav-item"><a class="nav-link" href="form-cadastro-cachorro.php">Cadastrar Cachorro</a></li>
                     <li class="nav-item">
                         <a class="nav-link" href="logout.php"
                             onclick="return confirm('Tem certeza de que deseja sair?');">
