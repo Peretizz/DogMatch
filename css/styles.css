@@ -1,11 +1,10 @@
 /* Paleta:
-   #679DAB 
-   #9E6631
+   #679DAB
+    #9E6631
    #DE720D
    #36798A
    #5E4935
-   #253033
-*/
+   #253033*/
 
 body {
   background-color: rgba(222, 114, 13, 0.8);
@@ -16,10 +15,15 @@ body {
 .navbar {
   background-color: #253033;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  padding: 1rem;
-  height: 100px; 
+  padding: 0.5rem 1rem;
+  position: relative;
+  height: 125px;
+}
+
+.navbar .container {
   display: flex;
-  align-items: center; 
+  align-items: center;
+  justify-content: space-between;
 }
 
 .navbar-brand {
@@ -29,11 +33,43 @@ body {
   text-decoration: none;
 }
 
+.navbar-toggler {
+  border: none;
+  padding: 0.25rem 0.5rem;
+  background: transparent;
+}
+
+.navbar-toggler:focus {
+  box-shadow: none;
+}
+
+.navbar-collapse {
+  position: absolute;  /* Remove do fluxo normal e permite posicionamento livre */
+  top: 100%;          /* Posiciona logo abaixo da navbar (100% da altura dela) */
+  right: 0;           /* Alinha no lado direito */
+  width: 150px;       /* Define largura fixa para o menu */
+  background-color: #253033;  /* Fundo escuro igual à navbar */
+  padding: 1rem;      /* Espaçamento interno */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);  /* Sombra para destacar */
+  z-index: 1000;      /* Garante que fique sobre outros elementos */
+  text-align: center;
+}
+
+.navbar-collapse.show {
+  display: block;
+}
+
+.navbar-nav {
+  padding: 0.5rem 0;
+}
+
 .nav-link {
   color: #d4ebf8;
   transition: color 0.3s ease;
   text-decoration: none;
   padding: 0.5rem 1rem;
+  display: block;
+  white-space: nowrap;
 }
 
 .nav-link:hover,
@@ -42,7 +78,6 @@ body {
 }
 
 main {
-  
   flex: 1;
   padding: 2rem;
 }
@@ -61,9 +96,11 @@ h2 {
   color: #0a3981;
   font-size: 1.2rem;
 }
+
 .login-container {
   background-color: #253033;
 }
+
 .form-label {
   color: #ffffff;
   font-weight: 600;
@@ -167,8 +204,8 @@ body h1 {
 }
 
 .logo {
-  width: 150px;
-  height: 150px;
+  width: 120px;
+  height: 120px;
   object-fit: contain;
 }
 
@@ -209,26 +246,29 @@ body h1 {
   display: flex;
   font-size: 50px;
 }
+
 .aura1 {
   color: #679dab;
 }
+
 .aura2 {
   color: rgba(222, 114, 13, 0.8);
 }
 
-.receba{
+.receba {
   text-align: end;
   justify-content: end;
   align-items: end;
   display: flex;
 }
 
-.fundo{
+.fundo {
   width: 650px;
   height: 650px;
   align-items: center;
   display: flex;
 }
-.cadastro{
+
+.cadastro {
   background-color: #253033;
 }
