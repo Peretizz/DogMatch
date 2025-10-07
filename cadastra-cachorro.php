@@ -29,27 +29,14 @@ include "incs/valida-sessao.php";
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="#">Início</a></li>
                     <li class="nav-item"><a class="nav-link" href="#">Sobre</a></li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="logout.php"
-                            onclick="return confirm('Tem certeza de que deseja sair?');">
-                            Sair
-                        </a>
-                    </li>
+                    <li class="nav-item"><a class="nav-link" href="logout.php">Sair</a></li>
                 </ul>
             </div>
         </div>
     </nav>
-
-    <main class="container text-center my-5">
-        <h1>Seja bem-vindo(a)!</h1>
-        <p class="lead">Aqui estará o conteúdo exclusivo da área logada.</p>
-    </main>
-
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
-
 </body>
 
 </html>
