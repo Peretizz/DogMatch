@@ -8,22 +8,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="css/styles.css">
-    <style>
-        html, body {
-            height: 100%;
-        }
-        body {
-            display: flex;
-            flex-direction: column;
-        }
-        main {
-            flex-grow: 1; /* Permite que o main ocupe o espaço restante */
-        }
-        /* Esta regra em 'styles.css' também deve ser verificada e ajustada */
-        .login-container {
-            min-height: 450px; /* **OPCIONAL:** Define uma altura mínima para o formulário */
-        }
-    </style>
 </head>
 
 <body>
@@ -58,8 +42,8 @@
                 <span class="aura2 mb-4 text-center">Match</span>
                 </div>
                 <div class="mb-4">
-                    <label for="email" class="form-label">Email</label>
-                    <input type="email" id="email" name="email" placeholder="Digite seu Usuário" class="form-control" required>
+                    <label for="email" class="form-label">Usuário ou Email</label>
+                    <input type="email" id="email" name="email" placeholder="Digite seu Usuário ou Email" class="form-control" required>
                 </div>
 
                 <div class="mb-4">
@@ -72,7 +56,7 @@
                 </div>
 
                 <div class="receba text-center mt-5">
-                    <a style="color:#ffffff">Não tem conta? </a><a href="form-cadastra-usuario.html" style="color: #DE720D">CADASTRE-SE</a> 
+                    <a style="color:#ffffff">Não tem conta? </a><a href="form-cadastra-usuario.html" style="color: #DE720D">CADASTRE-SE</a> 
                 </div>
             </form>
         </div>

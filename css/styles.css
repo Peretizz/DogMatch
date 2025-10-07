@@ -17,9 +17,9 @@ body {
   background-color: #253033;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 1rem;
-  height: 100px; /* Altura fixa para a navbar */
+  height: 100px; 
   display: flex;
-  align-items: center; /* Centraliza o conteúdo verticalmente */
+  align-items: center; 
 }
 
 .navbar-brand {
@@ -207,6 +207,7 @@ body h1 {
   text-align: center;
   justify-content: center;
   display: flex;
+  font-size: 50px;
 }
 .aura1 {
   color: #679dab;
@@ -227,4 +228,7 @@ body h1 {
   height: 650px;
   align-items: center;
   display: flex;
+}
+.cadastro{
+  background-color: #253033;
 }

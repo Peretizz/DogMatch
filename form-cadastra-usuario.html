@@ -27,11 +27,9 @@
         </div>
     </nav>
 
-    <main class="container text-center my-5">
-        <h2 class="display-4">Bem-vindo!</h2>
-        <p class="lead">Cadastre-se em nosso site.</p>
-        
-        <form action="cadastra-usuario.php" method="post" class="w-50 mx-auto text-start row" enctype="multipart/form-data">
+    <main class="container text-center my-5">  
+        <form action="cadastra-usuario.php" method="post" class="cadastro w-50 mx-auto text-start row rounded-4" enctype="multipart/form-data">
+            <h3 class="text-white text-center" style="font-size: 50px;">Cadastre-se</h3>
             <div class="mb-3 col-md-12">
                 <label class="form-label">Nome</label>
                 <input type="text" class="form-control" name="nome" placeholder="Nome" required>
@@ -51,8 +49,8 @@
             <div class="col-12">
                  <button type="submit" class="btn btn-primary btn-lg my-4 w-100">Cadastrar</button>
             </div>
-            <div class="text-center mt-3">
-                <a href="login.php">Já sou usuário</a>
+            <div class="text-center mb-3">
+                <a href="login.php" style="color: #DE720D">Já sou usuário!</a>
             </div>
         </form>
     </main>
