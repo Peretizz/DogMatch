@@ -49,5 +49,14 @@ class UsuarioDAO{
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public static function listarCachorrosDono($idusuario)
+    {
+        $conexao = ConexaoBD::conectar();
+        $sql = "select * from usuarios, donos where usuarios.idusuario = donos.idusuario";
+        $stmt = $conexao->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
 ?>
