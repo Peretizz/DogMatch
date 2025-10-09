@@ -1,11 +1,6 @@
 <?php
 class Util
 {
-    /**
-     * Salva um arquivo carregado.
-     * @param string $nomeCampo O nome do campo de arquivo no formulário (ex: 'foto', 'vacinacao').
-     * @return string|false Retorna o nome único do arquivo salvo ou false em caso de erro.
-     */
     public static function salvarArquivo(string $nomeCampo)
     {
         // Define o diretório onde os arquivos serão salvos
