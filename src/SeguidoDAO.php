@@ -5,7 +5,7 @@ class SeguidoDAO{
 
     public static function seguir($idusuario, $idseguido){
         $conexao = ConexaoBD::conectar();
-        $sql = "insert into Seguidos (idusuario, idseguido) values (:idusuario, :idseguido)";
+        $sql = "insert into seguidos (idusuario, idseguido) values (:idusuario, :idseguido)";
         $stmt = $conexao->prepare($sql);
         $stmt->bindParam(':idusuario', $idusuario);
         $stmt->bindParam(':idseguido', $idseguido);
