@@ -39,7 +39,7 @@
             
                 <div
                     style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; padding: 0.75rem; background-color: white; border-radius: 0.375rem; border: 1px solid #1F509A;">
-            <a href="seguir.php?idseguido=<?= $usuario["nome"] ?>" class="btn btn-success mx-3"><?= $usuario["nome"] ?></a>
+            <a href="seguir.php?idseguido=<?= $usuario["idusuario"] ?>" class="btn btn-success mx-3"><?= $usuario["nome"] ?></a>
                     <button type="button" class="btn-primary"
                         style="display: inline-block; width: auto; padding: 0.5rem 1rem;">Adicionar</button>
                 </div>
