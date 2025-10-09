@@ -60,7 +60,7 @@
                 </div>
 
                 <div class="receba text-center mt-5">
-                    <a style="color:#ffffff">Não tem conta? </a><a href="form-cadastra-usuario.html"
+                    <a style="color:#ffffff">Não tem conta? </a><a href="form-cadastra-usuario.php"
                         style="color: #DE720D">CADASTRE-SE</a>
                 </div>
             </form>

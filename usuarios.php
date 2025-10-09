@@ -1,3 +1,6 @@
+<?php
+    include("incs/valida-sessao.php");
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -30,7 +33,7 @@
         <div class="user-list" style="margin-top: 1.5rem;">
             <?php
             require_once "src/UsuarioDAO.php";
-            $usuarios = UsuarioDAO::listar();
+            $usuarios = UsuarioDAO::listarUsuarios($_SESSION["idusuario"]);
             foreach ($usuarios as $usuario) {
                 ?>  
             

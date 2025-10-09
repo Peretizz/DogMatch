@@ -39,15 +39,15 @@ class UsuarioDAO{
             return false;
         }
     }
-     public static function listar()
+     public static function listarUsuarios($idusuario)
     {
         $conexao = ConexaoBD::conectar();
-        $sql = "select * from usuarios";
+        $sql = "select * from usuarios where idusuario!=?";
 
         $stmt = $conexao->prepare($sql);
+        $stmt->bindParam(1, $idusuario);
         $stmt->execute();
-        $filmes = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        return $filmes;
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
 ?>
