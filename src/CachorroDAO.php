@@ -19,13 +19,6 @@ class CachorroDAO
 
         $vacinacao = Util::salvarArquivo('vacinacao');
 
-        if ($foto === false) {
-            $foto = null;
-        }
-        if ($vacinacao === false) {
-            $vacinacao = null;
-        }
-
 
         $sql = "INSERT INTO cachorros (nome, foto, peso, raça, vacinacao, idade) 
                  VALUES (:nome, :foto, :peso, :raca, :vacinacao, :idade)";
@@ -38,7 +31,7 @@ class CachorroDAO
         $stmt->bindParam(':vacinacao', $vacinacao);
         $stmt->bindParam(':idade', $idade);
 
-        return $stmt->execute(); // Retorna o resultado da execução
+        return $stmt->execute(); 
     }
 
     public static function listar()
@@ -53,3 +46,4 @@ class CachorroDAO
     }
 
 }
+?>

@@ -8,3 +8,4 @@ class ConexaoBD{
 }
 
 ConexaoBD::conectar();
+?>

@@ -36,7 +36,7 @@ include "incs/valida-sessao.php";
                         </a>
                     </li>
                 </ul>
-            </div>
+            </div>  
         </div>
     </nav>
 
