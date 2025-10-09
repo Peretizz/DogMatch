@@ -50,7 +50,7 @@ class UsuarioDAO{
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public static function listarCachorrosDono($idusuario)
+    public static function listarCachorrosDono()
     {
         $conexao = ConexaoBD::conectar();
         $sql = "select * from usuarios, donos where usuarios.idusuario = donos.idusuario";

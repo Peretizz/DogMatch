@@ -3,7 +3,7 @@
     require_once"src/SeguidoDAO.php";
     if (isset($_GET["idseguido"])) {
         SeguidoDAO::seguir($_SESSION["idusuario"], $_GET["idseguido"]);
-    }else {
-        header("usuarios.php");
     }
+    header("usuarios.php");
+    
 ?>
