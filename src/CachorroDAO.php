@@ -26,9 +26,13 @@ class CachorroDAO
             $vacinacao = null;
         }
 
+        session_start();
+        $idusuario = $_SESSION['idusuario'];
 
-        $sql = "INSERT INTO cachorros (nome, foto, peso, raça, vacinacao, idade) 
-                 VALUES (:nome, :foto, :peso, :raca, :vacinacao, :idade)";
+
+
+        $sql = "INSERT INTO cachorros (nome, foto, peso, raça, vacinacao, idade, idusuario) 
+                 VALUES (:nome, :foto, :peso, :raca, :vacinacao, :idade, :idusuario)";
         $stmt = $conexao->prepare($sql);
 
         $stmt->bindParam(':nome', $nome);
@@ -37,8 +41,9 @@ class CachorroDAO
         $stmt->bindParam(':raca', $raca);
         $stmt->bindParam(':vacinacao', $vacinacao);
         $stmt->bindParam(':idade', $idade);
+        $stmt->bindParam(':idusuario', $idusuario);
 
-        return $stmt->execute(); // Retorna o resultado da execução
+        return $stmt->execute(); 
     }
 
     public static function listar()
