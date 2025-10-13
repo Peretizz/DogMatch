@@ -19,6 +19,9 @@ class CachorroDAO
         $vacinacao = Util::salvarArquivo('vacinacao');
 
         session_start();
+
+
+        
         $idusuario = $_SESSION['idusuario'];
         $idraca = $dados['idraca'];
         ;

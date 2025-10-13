@@ -36,9 +36,12 @@ class UsuarioDAO
         $stmt->bindParam(2, $senhaCriptografada);
         $stmt->execute();
         $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $usuario;
+        if ($stmt->rowCount() > 0) {
+            return $usuario;
+        } else {
+            return false;
+        }
     }
-    
     public static function listarUsuarios($idusuarios)
     {
         $sql = "SELECT * FROM usuarios WHERE idusuario!=?";
