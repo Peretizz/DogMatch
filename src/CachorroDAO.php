@@ -27,7 +27,7 @@ class CachorroDAO
 
         session_start();
         $idusuario = $_SESSION['idusuario'];
-        $idraca = $idade = $dados['idraca'];
+        $idraca = $dados['idraca'];
         ;
 
 
@@ -50,8 +50,7 @@ class CachorroDAO
     public static function listar()
     {
         $conexao = ConexaoBD::conectar();
-        $sql = "SELECT * FROM cachorros";
-
+        $sql = "SELECT * FROM cachorros, racas WHERE cachorros.idraca = racas.idraca;";
         $stmt = $conexao->prepare($sql);
         $stmt->execute();
         $cachorros = $stmt->fetchAll(PDO::FETCH_ASSOC);
