@@ -7,10 +7,10 @@
         $_SESSION['nome'] = $usuarios['nome'];
         $_SESSION['email'] = $usuarios['email'];
         $_SESSION['localizacao'] = $usuarios['localizacao'];
+        $_SESSION['foto'] = $usuarios['foto'];
         header("Location:index.php");
     }else{
-        $_SESSION['msg'] = "Usuário ou senha inválido.";
-        
+        $_SESSION['msg'] = "Usuário ou senha inválido.";        
         header("Location:login.php");
     }
 ?>

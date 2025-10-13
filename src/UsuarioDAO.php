@@ -13,8 +13,13 @@ class UsuarioDAO
         $email = $dados['email'];
         $senha = $dados['senha'];
         $localizacao = $dados['localizacao'];
+        
+        $foto = null;
+        if (isset($_FILES['foto']) && $_FILES['foto']['error'] == 0) {
+            $foto = Util::salvarArquivo('foto');
+        }
 
-        $sql = "insert into usuarios (nome, email, senha, localizacao) values (:nome, :email, :senha, :localizacao)";
+        $sql = "insert into usuarios (nome, email, senha, localizacao, foto) values (:nome, :email, :senha, :localizacao, :foto)";
         $stmt = $conexao->prepare($sql);
 
         $stmt->bindParam(':nome', $nome);
@@ -22,6 +27,7 @@ class UsuarioDAO
         $senhaCriptografada = md5($senha);
         $stmt->bindParam(':senha', $senhaCriptografada);
         $stmt->bindParam(':localizacao', $localizacao);
+        $stmt->bindParam(':foto', $foto);
         $stmt->execute();
     }
 
@@ -42,6 +48,7 @@ class UsuarioDAO
             return false;
         }
     }
+    
     public static function listarUsuarios($idusuarios)
     {
         $sql = "SELECT * FROM usuarios WHERE idusuario!=?";
@@ -54,7 +61,8 @@ class UsuarioDAO
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-     public static function buscarUsuarioNome($nome, $idUsuarioLogado)
+    
+    public static function buscarUsuarioNome($nome, $idUsuarioLogado)
     {
         $conexao = ConexaoBD::conectar();
         
@@ -73,6 +81,16 @@ class UsuarioDAO
         $stmt->execute();
         
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    
+    public static function buscarPorId($idusuario)
+    {
+        $conexao = ConexaoBD::conectar();
+        $sql = "SELECT * FROM usuarios WHERE idusuario = ?";
+        $stmt = $conexao->prepare($sql);
+        $stmt->bindParam(1, $idusuario);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
 }
