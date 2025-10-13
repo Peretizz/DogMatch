@@ -35,6 +35,7 @@ include "incs/valida-sessao.php";
                             Sair
                         </a>
                     </li>
+                    <li class="nav-item"><a class="nav-link" href="usuarios.php">Explorar Usuários</a></li>
                 </ul>
             </div>
         </div>
