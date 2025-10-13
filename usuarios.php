@@ -38,12 +38,12 @@ include("incs/valida-sessao.php");
                 ?> 
 
                 <div
-                    style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; padding: 0.75rem; background-color: white; border-radius: 0.375rem; border: 1px solid #1F509A;">
+                    style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; padding: 0.75rem; background-color: white; border-radius: 0.375rem; border: 1px solid #DE720D;">
 
                     <span class="mx-3"><?= $usuario["nome"] ?></span>
 
                     <a href="seguir.php?idseguido=<?= $usuario["idusuario"] ?>" class="btn btn-primary"
-                        style="display: inline-block; width: auto; padding: 0.5rem 1rem;">Adicionar</a>
+                        style="border: 1px solid #DE720D;   display: inline-block; width: auto; padding: 0.5rem 1rem; background-color: rgba(222, 114, 13, 0.8);">Adicionar</a>
                 </div>
                 <?php
             }
