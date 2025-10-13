@@ -16,7 +16,7 @@ include("incs/valida-sessao.php");
 <body>
     <div class="container" style="max-width: 600px; margin: 2rem auto; padding: 2rem;">
         <h3 style="color: #1F509A; margin-bottom: 1.5rem;">Adicione Seguidores</h3>
-        
+
         <form>
             <div class="form-group" style="margin-bottom: 1rem;">
                 <label class="form-label">Nome</label>
@@ -39,7 +39,11 @@ include("incs/valida-sessao.php");
             }
 
             $usuarios = UsuarioDAO::buscarUsuarioNome($_GET["nome"], $_SESSION["idusuario"]);
+
+            require_once "src/SeguidoDAO.php";
+
             foreach ($usuarios as $usuario) {
+                $segue = SeguidoDAO::jaSegue($_SESSION["idusuario"], $usuario["idusuario"]);
                 ?>
 
                 <div
@@ -47,8 +51,16 @@ include("incs/valida-sessao.php");
 
                     <span class="mx-3"><?= $usuario["nome"] ?></span>
 
-                    <a href="seguir.php?idseguido=<?= $usuario["idusuario"] ?>" class="btn btn-primary"
-                        style="border: 1px solid #DE720D;   display: inline-block; width: auto; padding: 0.5rem 1rem; background-color: rgba(222, 114, 13, 0.8);">Adicionar</a>
+                    <div>
+                        <?php if ($segue) { ?>
+                            <a href="parar-seguir.php?idseguido=<?= $usuario["idusuario"] ?>" class="btn btn-primary"
+                                style="border: 1px solid #DE720D;   display: inline-block; width: auto; padding: 0.5rem 1rem; background-color: rgba(222, 114, 13, 0.8);">Deixar
+                                de Seguir</a>
+                        <?php } else { ?>
+                            <a href="seguir.php?idseguido=<?= $usuario["idusuario"] ?>" class="btn btn-primary"
+                                style="border: 1px solid #DE720D;   display: inline-block; width: auto; padding: 0.5rem 1rem; background-color: rgba(222, 114, 13, 0.8);">Seguir</a>
+                        <?php } ?>
+                    </div>
                 </div>
                 <?php
             }
