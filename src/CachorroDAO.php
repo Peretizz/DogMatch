@@ -18,13 +18,6 @@ class CachorroDAO
 
         $vacinacao = Util::salvarArquivo('vacinacao');
 
-        if ($foto === false) {
-            $foto = null;
-        }
-        if ($vacinacao === false) {
-            $vacinacao = null;
-        }
-
         session_start();
         $idusuario = $_SESSION['idusuario'];
         $idraca = $dados['idraca'];
