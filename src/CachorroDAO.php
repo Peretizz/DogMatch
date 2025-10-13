@@ -12,7 +12,6 @@ class CachorroDAO
 
         $nome = $dados['nome'];
         $peso = $dados['peso'];
-        $raca = $dados['raca'];
         $idade = $dados['idade'];
 
         $foto = Util::salvarArquivo('foto');
@@ -28,20 +27,21 @@ class CachorroDAO
 
         session_start();
         $idusuario = $_SESSION['idusuario'];
+        $idraca = $idade = $dados['idraca'];;
 
 
 
-        $sql = "INSERT INTO cachorros (nome, foto, peso, raça, vacinacao, idade, idusuario) 
-                 VALUES (:nome, :foto, :peso, :raca, :vacinacao, :idade, :idusuario)";
+        $sql = "INSERT INTO cachorros (nome, foto, peso, vacinacao, idade, idusuario, idraca) 
+                 VALUES (:nome, :foto, :peso, :vacinacao, :idade, :idusuario, :idraca)";
         $stmt = $conexao->prepare($sql);
 
         $stmt->bindParam(':nome', $nome);
         $stmt->bindParam(':foto', $foto);
         $stmt->bindParam(':peso', $peso);
-        $stmt->bindParam(':raca', $raca);
         $stmt->bindParam(':vacinacao', $vacinacao);
         $stmt->bindParam(':idade', $idade);
         $stmt->bindParam(':idusuario', $idusuario);
+        $stmt->bindParam(':idraca', $idraca);
 
         return $stmt->execute(); 
     }
@@ -49,7 +49,7 @@ class CachorroDAO
     public static function listar()
     {
         $conexao = ConexaoBD::conectar();
-        $sql = "SELECT * FROM cachorros";
+        $sql = "SELECT * FROM cachorros where cachorros.idraca = racas.idraca";
 
         $stmt = $conexao->prepare($sql);
         $stmt->execute();

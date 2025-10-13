@@ -20,11 +20,11 @@ include("incs/valida-sessao.php");
 
         <div class="form-group" style="margin-bottom: 1rem;">
             <label class="form-label">Nome</label>
-            <input type="text" class="form-control" name="nome" placeholder="Nome" style="margin-bottom: 0.75rem;">
+            <input type="text" class="form-control" name="nome" placeholder="Nome" style="margin-bottom: 0.75rem;" required>
         </div>
 
 
-        <button class="search btn-primary" type="button"
+        <button class="search btn-primary" type="submit"
             style="display: inline-block; width: auto; margin-bottom: 1.5rem;">Buscar</button>
 
         <br>
@@ -33,7 +33,13 @@ include("incs/valida-sessao.php");
         <div class="user-list" style="margin-top: 1.5rem;">
             <?php
             require_once "src/UsuarioDAO.php";
-            $usuarios = UsuarioDAO::listarUsuarios($_SESSION["idusuario"]);
+
+            if (!isset($_GET["nome"])) {
+                $_GET["nome"] = "";
+                $usuarios = [];
+            }
+
+            $usuarios = UsuarioDAO::buscarUsuarioNome($_GET["nome"], $_SESSION["idusuario"]);
             foreach ($usuarios as $usuario) {
                 ?> 
 

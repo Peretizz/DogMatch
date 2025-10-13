@@ -54,5 +54,19 @@ class UsuarioDAO
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    public static function buscarUsuarioNome($nome, $idusuario)
+    {
+        $sql = "SELECT * FROM usuarios WHERE nome like ?";
+
+        $conexao = ConexaoBD::conectar();
+        $stmt = $conexao->prepare($sql);
+        $nome = "%".$nome."%";
+        $stmt->bindParam(1, $nome);
+        $stmt->execute();
+
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
 }
 ?>

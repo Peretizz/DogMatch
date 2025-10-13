@@ -63,8 +63,17 @@ include "incs/valida-sessao.php";
                 </div>
                 <div class="col">
                     <label class="form-label">Raça</label>
-                    <input type="text" class="form-control" name="raca" placeholder="Insira a raça do seu cachorro"
-                        required>
+                     <select name="idraca" class="form-select" required>
+                        <?php
+                        require_once "src/CachorroDAO.php";
+                        $racas = CachorroDAO::listar();
+                        for ($i = 0; $i < count($racas); $i++) {
+                            ?>
+                            <option value="<?= $racas[$i]["idraca"] ?>"><?= $racas[$i]["nome"] ?></option>
+                            <?php
+                        }
+                        ?>
+                    </select>
                 </div>
             </div>
 
