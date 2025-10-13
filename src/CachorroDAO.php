@@ -46,15 +46,16 @@ class CachorroDAO
         return $stmt->execute(); 
     }
 
-    public static function listar()
-    {
-        $conexao = ConexaoBD::conectar();
-        $sql = "SELECT * FROM cachorros where cachorros.idraca = racas.idraca";
 
-        $stmt = $conexao->prepare($sql);
-        $stmt->execute();
-        $cachorros = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        return $cachorros;
-    }
+public static function listarRacas()
+{
+    $conexao = ConexaoBD::conectar();
+    $sql = "SELECT idraca, nome FROM racas ORDER BY nome";
+    
+    $stmt = $conexao->prepare($sql);
+    $stmt->execute();
+    $racas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $racas;
+}
 
 }

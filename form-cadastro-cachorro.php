@@ -1,5 +1,7 @@
 <?php
 include "incs/valida-sessao.php";
+// Assumindo que esta inclusão é necessária para o select de raças
+require_once "src/CachorroDAO.php"; 
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -63,10 +65,9 @@ include "incs/valida-sessao.php";
                 </div>
                 <div class="col">
                     <label class="form-label">Raça</label>
-                     <select name="idraca" class="form-select" required>
+                    <select name="idraca" class="form-select form-control" required>
                         <?php
-                        require_once "src/CachorroDAO.php";
-                        $racas = CachorroDAO::listar();
+                        $racas = CachorroDAO::listarRacas(); 
                         for ($i = 0; $i < count($racas); $i++) {
                             ?>
                             <option value="<?= $racas[$i]["idraca"] ?>"><?= $racas[$i]["nome"] ?></option>
