@@ -1,3 +1,6 @@
+<?php
+include("incs/valida-sessao.php");
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -30,15 +33,17 @@
         <div class="user-list" style="margin-top: 1.5rem;">
             <?php
             require_once "src/UsuarioDAO.php";
-            $usuarios = UsuarioDAO::listar();
+            $usuarios = UsuarioDAO::listarUsuarios($_SESSION["idusuario"]);
             foreach ($usuarios as $usuario) {
-                ?>  
-            
+                ?> 
+
                 <div
                     style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; padding: 0.75rem; background-color: white; border-radius: 0.375rem; border: 1px solid #1F509A;">
-            <a href="seguir.php?idseguido=<?= $usuario["nome"] ?>" class="btn btn-success mx-3"><?= $usuario["nome"] ?></a>
-                    <button type="button" class="btn-primary"
-                        style="display: inline-block; width: auto; padding: 0.5rem 1rem;">Adicionar</button>
+
+                    <span class="mx-3"><?= $usuario["nome"] ?></span>
+
+                    <a href="seguir.php?idseguido=<?= $usuario["idusuario"] ?>" class="btn btn-primary"
+                        style="display: inline-block; width: auto; padding: 0.5rem 1rem;">Adicionar</a>
                 </div>
                 <?php
             }
