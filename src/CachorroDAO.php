@@ -27,7 +27,8 @@ class CachorroDAO
 
         session_start();
         $idusuario = $_SESSION['idusuario'];
-        $idraca = $idade = $dados['idraca'];;
+        $idraca = $idade = $dados['idraca'];
+        ;
 
 
 
@@ -43,19 +44,28 @@ class CachorroDAO
         $stmt->bindParam(':idusuario', $idusuario);
         $stmt->bindParam(':idraca', $idraca);
 
-        return $stmt->execute(); 
+        return $stmt->execute();
     }
 
+    public static function listar()
+    {
+        $conexao = ConexaoBD::conectar();
+        $sql = "SELECT * FROM cachorros";
 
-public static function listarRacas()
-{
-    $conexao = ConexaoBD::conectar();
-    $sql = "SELECT idraca, nome FROM racas ORDER BY nome";
-    
-    $stmt = $conexao->prepare($sql);
-    $stmt->execute();
-    $racas = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    return $racas;
-}
+        $stmt = $conexao->prepare($sql);
+        $stmt->execute();
+        $cachorros = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $cachorros;
+    }
+    public static function listarRacas()
+    {
+        $conexao = ConexaoBD::conectar();
+        $sql = "SELECT idraca, nome FROM racas ORDER BY nome";
+
+        $stmt = $conexao->prepare($sql);
+        $stmt->execute();
+        $racas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $racas;
+    }
 
 }
