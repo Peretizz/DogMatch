@@ -12,6 +12,7 @@ class PostDAO
         $idusuario = $dados['idusuario'];
         $idcachorro = $dados['idcachorro'];
 
+        // Salvar foto se foi enviada
         $foto = null;
         if (isset($_FILES['foto']) && $_FILES['foto']['error'] === UPLOAD_ERR_OK) {
             $foto = Util::salvarArquivo('foto');
@@ -33,10 +34,12 @@ class PostDAO
     {
         $conexao = ConexaoBD::conectar();
 
-        $sql = "SELECT p.*, u.nome as nome_usuario, c.nome as nome_cachorro, c.foto as foto_cachorro
+        $sql = "SELECT p.*, u.nome as nome_usuario, u.foto as foto_usuario, 
+                c.nome as nome_cachorro, c.foto as foto_cachorro, r.nome as raca_cachorro
                 FROM posts p
                 INNER JOIN usuarios u ON p.idusuario = u.idusuario
                 INNER JOIN cachorros c ON p.idcachorro = c.idcachorro
+                INNER JOIN racas r ON c.idraca = r.idraca
                 WHERE p.idusuario IN (
                     SELECT idseguido FROM seguidos WHERE idusuario = :idusuario
                     UNION
@@ -55,10 +58,12 @@ class PostDAO
     {
         $conexao = ConexaoBD::conectar();
 
-        $sql = "SELECT p.*, u.nome as nome_usuario, c.nome as nome_cachorro, c.foto as foto_cachorro
+        $sql = "SELECT p.*, u.nome as nome_usuario, u.foto as foto_usuario,
+                c.nome as nome_cachorro, c.foto as foto_cachorro, r.nome as raca_cachorro
                 FROM posts p
                 INNER JOIN usuarios u ON p.idusuario = u.idusuario
                 INNER JOIN cachorros c ON p.idcachorro = c.idcachorro
+                INNER JOIN racas r ON c.idraca = r.idraca
                 WHERE p.idusuario = :idusuario
                 ORDER BY p.data_criacao DESC";
 

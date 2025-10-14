@@ -72,6 +72,7 @@ $cachorros_usuario = array_filter($cachorros, function($c) use ($idusuario_perfi
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="index.php">Feed</a></li>
                     <li class="nav-item"><a class="nav-link active" href="perfil.php">Perfil</a></li>
+                    <li class="nav-item"><a class="nav-link" href="form-criar-post.php">Criar Post</a></li>
                     <li class="nav-item"><a class="nav-link" href="form-cadastro-cachorro.php">Cadastrar Cachorro</a></li>
                     <li class="nav-item"><a class="nav-link" href="usuarios.php">Explorar Usuários</a></li>
                     <li class="nav-item">

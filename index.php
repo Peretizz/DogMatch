@@ -2,6 +2,7 @@
 include "incs/valida-sessao.php";
 require_once "src/PostDAO.php";
 
+// Buscar posts dos usuários seguidos
 $posts = PostDAO::listarPostsSeguidos($_SESSION['idusuario']);
 ?>
 <!DOCTYPE html>
@@ -74,24 +75,32 @@ $posts = PostDAO::listarPostsSeguidos($_SESSION['idusuario']);
             color: #d4ebf8;
         }
 
+        /* Improved floating button styling */
         .btn-criar-post {
             position: fixed;
             bottom: 2rem;
             right: 2rem;
-            width: 60px;
-            height: 60px;
+            width: 65px;
+            height: 65px;
             border-radius: 50%;
-            background-color: #36798a;
-            color: #d4ebf8;
+            background-color: #DE720D;
+            color: #ffffff;
             border: none;
-            font-size: 1.5rem;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            font-size: 2rem;
+            box-shadow: 0 6px 20px rgba(222, 114, 13, 0.4);
             transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            z-index: 999;
         }
 
         .btn-criar-post:hover {
-            background-color: #DE720D;
-            transform: scale(1.1);
+            background-color: #36798a;
+            color: #d4ebf8;
+            transform: scale(1.15);
+            box-shadow: 0 8px 25px rgba(54, 121, 138, 0.5);
         }
     </style>
 </head>
@@ -162,7 +171,10 @@ $posts = PostDAO::listarPostsSeguidos($_SESSION['idusuario']);
                                     </a>
                                     <div class="post-dog-name">
                                         <i class="bi bi-heart-fill" style="color: #DE720D;"></i>
-                                        <?= htmlspecialchars($post['nome_cachorro']) ?>
+                                        <?= htmlspecialchars($post['nome_cachorro']) ?> 
+                                        <?php if (isset($post['raca_cachorro']) && !empty($post['raca_cachorro'])) { ?>
+                                            <span style="color: #9E6631;">(<?= htmlspecialchars($post['raca_cachorro']) ?>)</span>
+                                        <?php } ?>
                                     </div>
                                 </div>
                                 <div class="post-date">
@@ -183,6 +195,7 @@ $posts = PostDAO::listarPostsSeguidos($_SESSION['idusuario']);
             </div>
         </div>
 
+        <!-- Botão flutuante para criar post -->
         <a href="form-criar-post.php" class="btn-criar-post" title="Criar novo post">
             <i class="bi bi-plus-lg"></i>
         </a>
