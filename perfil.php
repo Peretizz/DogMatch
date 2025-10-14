@@ -6,33 +6,12 @@ require_once "src/SeguidoDAO.php";
 require_once "src/CachorroDAO.php";
 
 // Pega o ID do usuário do perfil, se não tiver, usa o ID da sessão
-$idusuario_perfil = $_GET['idusuario'];
-if (!$idusuario_perfil) {
-    $idusuario_perfil = $_SESSION['idusuario'];
-}
+$idusuario_perfil = $_GET['idusuario'] ?? $_SESSION['idusuario'];
 
 $eh_proprio_perfil = ($idusuario_perfil == $_SESSION['idusuario']);
 
 // Busca dados do usuário do perfil
-$usuarios = UsuarioDAO::listarUsuarios($_SESSION['idusuario']);
-$usuario_perfil = null;
-
-if ($eh_proprio_perfil) {
-    $usuario_perfil = [
-        'idusuario' => $_SESSION['idusuario'],
-        'nome' => $_SESSION['nome'],
-        'email' => $_SESSION['email'],
-        'localizacao' => $_SESSION['localizacao'],
-        'foto' => $_SESSION['foto']
-    ];
-} else {
-    foreach ($usuarios as $u) {
-        if ($u['idusuario'] == $idusuario_perfil) {
-            $usuario_perfil = $u;
-            break;
-        }
-    }
-}
+$usuario_perfil = UsuarioDAO::buscarPorId($idusuario_perfil);
 
 if (!$usuario_perfil) {
     header("Location: index.php");
@@ -183,11 +162,11 @@ foreach ($cachorros as $c) {
                                     </div>
                                 </div>
                                 <div class="post-date">
-                                    <?= date('d/m/Y H:i', strtotime($post['data_criacao'])) ?>
+                                    <?= $post['data_criacao'] ?>
                                 </div>
                             </div>
                             <div class="post-content">
-                                <?= nl2br($post['conteudo']) ?>
+                                <?= $post['conteudo'] ?>
                             </div>
                             <?php if ($post['foto']) { ?>
                                 <img src="uploads/<?= $post['foto'] ?>" alt="Foto do post" class="post-image">
