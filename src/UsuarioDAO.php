@@ -93,5 +93,26 @@ class UsuarioDAO
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    public static function buscarSugestoes($idusuario, $limite = 8)
+    {
+        $conexao = ConexaoBD::conectar();
+        
+        $sql = "SELECT u.idusuario, u.nome, u.foto 
+                FROM usuarios u
+                WHERE u.idusuario != :idusuario
+                AND u.idusuario NOT IN (
+                    SELECT idseguido FROM seguidos WHERE idusuario = :idusuario
+                )
+                ORDER BY RAND()
+                LIMIT :limite";
+                
+        $stmt = $conexao->prepare($sql);
+        $stmt->bindParam(':idusuario', $idusuario, PDO::PARAM_INT);
+        $stmt->bindParam(':limite', $limite, PDO::PARAM_INT);
+        $stmt->execute();
+        
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
 }
 ?>

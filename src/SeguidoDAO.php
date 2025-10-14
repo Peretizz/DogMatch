@@ -1,4 +1,4 @@
-    <?php
+<?php
     require_once "ConexaoBD.php";
     require_once "Util.php";
 

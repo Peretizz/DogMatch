@@ -1,106 +1,271 @@
 <?php
-include "incs/valida-sessao.php";
+include("incs/valida-sessao.php");
+require_once "src/UsuarioDAO.php";
 require_once "src/PostDAO.php";
+require_once "src/SeguidoDAO.php";
 
-// Pega os posts dos usuários que você segue
-$posts = PostDAO::listarPostsSeguidos($_SESSION['idusuario']);
+$idusuario = $_SESSION['idusuario'];
+$usuario = UsuarioDAO::buscarPorId($idusuario);
+
+$posts = PostDAO::listarPostsSeguidos($idusuario);
+
+$sugestoes = [];
+$todosUsuarios = UsuarioDAO::listarUsuarios($idusuario);
+foreach ($todosUsuarios as $u) {
+    if (!SeguidoDAO::jaSegue($idusuario, $u['idusuario'])) {
+        $sugestoes[] = $u;
+        if (count($sugestoes) >= 8) {
+            break;
+        }
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Feed - DogMatch</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DogMatch - Feed</title>
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 <body>
-    <nav class="navbar">
-        <div class="container">
-            <a class="navbar-brand" href="index.php">
-                <img src="img/logo.png" alt="logo" class="logo">
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <?php if (isset($_SESSION['foto'])) { ?>
-                    <img src="uploads/<?= $_SESSION['foto'] ?>" alt="Perfil" style="width: 40px; height: 40px; border-radius: 50%;">
-                <?php } else { ?>
-                    <i class="bi bi-person-circle" style="color: #d4ebf8; font-size: 1.5rem;"></i>
-                <?php } ?>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link active" href="index.php">Feed</a></li>
-                    <li class="nav-item"><a class="nav-link" href="perfil.php">Perfil</a></li>
-                    <li class="nav-item"><a class="nav-link" href="form-criar-post.php">Criar Post</a></li>
-                    <li class="nav-item"><a class="nav-link" href="form-cadastro-cachorro.php">Cadastrar Cachorro</a></li>
-                    <li class="nav-item"><a class="nav-link" href="usuarios.php">Explorar Usuários</a></li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="logout.php" onclick="return confirm('Tem certeza de que deseja sair?');">Sair</a>
-                    </li>
-                </ul>
+    <div class="feed-container">
+        <!-- Sidebar Esquerda -->
+        <aside class="feed-sidebar">
+            <div class="feed-logo">
+                <img src="img/logo.png" alt="DogMatch Logo">
             </div>
-        </div>
-    </nav>
-    <main class="container my-5">
-        <h1 class="text-center mb-4">Feed</h1>
-        <?php if (isset($_SESSION['msg'])) { ?>
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <?= $_SESSION['msg'] ?>
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            
+            <nav class="feed-nav">
+                <a href="index.php" class="feed-nav-item active">
+                    <i class="bi bi-house-door-fill"></i>
+                    <span>Home</span>
+                </a>
+                <a href="#" class="feed-nav-item">
+                    <i class="bi bi-bell-fill"></i>
+                    <span>Notificações</span>
+                </a>
+                <a href="form-criar-post.php" class="feed-nav-item">
+                    <i class="bi bi-plus-square-fill"></i>
+                    <span>Postar</span>
+                </a>
+                <a href="#" class="feed-nav-item">
+                    <i class="bi bi-chat-dots-fill"></i>
+                    <span>Mensagens</span>
+                </a>
+            </nav>
+            
+            <div class="feed-sidebar-footer">
+                <a href="form-cadastro-cachorro.php" class="btn-cadastrar-cachorro">
+                    Cadastrar Cachorro
+                </a>
             </div>
-            <?php unset($_SESSION['msg']); ?>
-        <?php } ?>
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <?php if (count($posts) == 0) { ?>
-                    <div class="no-posts">
-                        <i class="bi bi-inbox" style="font-size: 4rem; color: #679DAB;"></i>
-                        <h3 style="color: #679DAB; margin-top: 1rem;">Nenhum post ainda</h3>
-                        <p>Siga outros usuários para ver posts no seu feed ou crie seu primeiro post!</p>
-                        <a href="usuarios.php" class="btn btn-primary me-2">Explorar Usuários</a>
-                        <a href="form-criar-post.php" class="btn btn-primary">Criar Post</a>
+        </aside>
+
+        <!-- Área Central - Feed -->
+        <main class="feed-main">
+            <!-- Barra de Pesquisa -->
+            <div class="feed-search-container">
+                <div class="feed-search-wrapper">
+                    <i class="bi bi-search"></i>
+                    <input 
+                        type="text" 
+                        id="searchInput" 
+                        class="feed-search-input" 
+                        placeholder="Buscar pessoas..."
+                        autocomplete="off"
+                    >
+                </div>
+                <div id="searchResults" class="feed-search-results"></div>
+            </div>
+
+            <!-- Header do Feed -->
+            <div class="feed-header">
+                <div class="feed-user-info">
+                    <?php if (!empty($usuario['foto'])) { ?>
+                        <img src="uploads/<?= htmlspecialchars($usuario['foto']) ?>" alt="Perfil" class="feed-user-avatar">
+                    <?php } else { ?>
+                        <div class="feed-user-avatar-placeholder">
+                            <i class="bi bi-person-circle"></i>
+                        </div>
+                    <?php } ?>
+                    <h2><?= htmlspecialchars($usuario['nome']) ?></h2>
+                </div>
+            </div>
+
+            <!-- Posts -->
+            <div class="feed-posts">
+                <?php if (empty($posts)) { ?>
+                    <div class="feed-empty">
+                        <p>Nenhum post para mostrar. Siga outros usuários para ver posts no seu feed!</p>
+                        <a href="usuarios.php" class="btn-ver-mais">Encontrar Pessoas</a>
                     </div>
                 <?php } else { ?>
                     <?php foreach ($posts as $post) { ?>
-                        <div class="post-card">
-                            <div class="post-header">
-                                <?php if (isset($post['foto_usuario'])) { ?>
-                                    <img src="uploads/<?= $post['foto_usuario'] ?>" alt="<?= $post['nome_usuario'] ?>" style="width: 50px; height: 50px; border-radius: 50%;">
+                        <article class="feed-post">
+                            <div class="feed-post-header">
+                                <?php if (!empty($post['foto_usuario'])) { ?>
+                                    <img src="uploads/<?= htmlspecialchars($post['foto_usuario']) ?>" alt="Perfil" class="feed-post-avatar">
                                 <?php } else { ?>
-                                    <i class="bi bi-person-circle" style="color: #679DAB; font-size: 3rem;"></i>
-                                <?php } ?>
-                                <div class="post-user-info">
-                                    <a href="perfil.php?idusuario=<?= $post['idusuario'] ?>" class="post-user-name">
-                                        <?= $post['nome_usuario'] ?>
-                                    </a>
-                                    <div class="post-dog-name">
-                                        <i class="bi bi-heart-fill" style="color: #DE720D;"></i>
-                                        <?= $post['nome_cachorro'] ?> 
-                                        <?php if (isset($post['raca_cachorro'])) { ?>
-                                            <span style="color: #9E6631;">(<?= $post['raca_cachorro'] ?>)</span>
-                                        <?php } ?>
+                                    <div class="feed-post-avatar-placeholder">
+                                        <i class="bi bi-person-circle"></i>
                                     </div>
-                                </div>
-                                <div class="post-date">
-                                    <?= date('d/m/Y H:i', strtotime($post['data_criacao'])) ?>
+                                <?php } ?>
+                                <div class="feed-post-user">
+                                    <a href="perfil.php?idusuario=<?= $post['idusuario'] ?>" class="feed-post-username">
+                                        <?= htmlspecialchars($post['nome_usuario']) ?>
+                                    </a>
+                                    <span class="feed-post-date"><?= date('d/m/Y H:i', strtotime($post['data'])) ?></span>
                                 </div>
                             </div>
-                            <div class="post-content">
-                                <?= nl2br($post['conteudo']) ?>
-                            </div>
-                            <?php if ($post['foto']) { ?>
-                                <img src="uploads/<?= $post['foto'] ?>" alt="Foto do post" class="post-image">
+
+                            <?php if (!empty($post['descricao'])) { ?>
+                                <div class="feed-post-content">
+                                    <p><?= nl2br(htmlspecialchars($post['descricao'])) ?></p>
+                                </div>
                             <?php } ?>
+
+                            <?php if (!empty($post['foto'])) { ?>
+                                <div class="feed-post-image">
+                                    <img src="uploads/<?= htmlspecialchars($post['foto']) ?>" alt="Post">
+                                </div>
+                            <?php } ?>
+
+                            <div class="feed-post-actions">
+                                <button class="feed-action-btn">
+                                    <i class="bi bi-heart"></i>
+                                </button>
+                                <button class="feed-action-btn">
+                                    <i class="bi bi-chat"></i>
+                                </button>
+                                <button class="feed-action-btn">
+                                    <i class="bi bi-share"></i>
+                                </button>
+                            </div>
+                        </article>
+                    <?php } ?>
+                <?php } ?>
+            </div>
+        </main>
+
+        <!-- Sidebar Direita - Sugestões -->
+        <aside class="feed-suggestions">
+            <div class="feed-suggestions-header">
+                <div class="feed-current-user">
+                    <?php if (!empty($usuario['foto'])) { ?>
+                        <img src="uploads/<?= htmlspecialchars($usuario['foto']) ?>" alt="Perfil" class="feed-current-user-avatar">
+                    <?php } else { ?>
+                        <div class="feed-current-user-avatar-placeholder">
+                            <i class="bi bi-person-circle"></i>
+                        </div>
+                    <?php } ?>
+                    <span><?= htmlspecialchars($usuario['nome']) ?></span>
+                </div>
+            </div>
+
+            <div class="feed-suggestions-title">
+                <h3>Sugestões para você:</h3>
+            </div>
+
+            <div class="feed-suggestions-list">
+                <?php if (empty($sugestoes)) { ?>
+                    <p class="feed-no-suggestions">Você já segue todos os usuários!</p>
+                <?php } else { ?>
+                    <?php foreach ($sugestoes as $sugestao) { ?>
+                        <div class="feed-suggestion-item">
+                            <a href="perfil.php?idusuario=<?= $sugestao['idusuario'] ?>" class="feed-suggestion-user">
+                                <?php if (!empty($sugestao['foto'])) { ?>
+                                    <img src="uploads/<?= htmlspecialchars($sugestao['foto']) ?>" alt="Perfil" class="feed-suggestion-avatar">
+                                <?php } else { ?>
+                                    <div class="feed-suggestion-avatar-placeholder">
+                                        <i class="bi bi-person-circle"></i>
+                                    </div>
+                                <?php } ?>
+                                <div class="feed-suggestion-info">
+                                    <span class="feed-suggestion-name"><?= htmlspecialchars($sugestao['nome']) ?></span>
+                                    <span class="feed-suggestion-username">@<?= htmlspecialchars(strtolower(str_replace(' ', '', $sugestao['nome']))) ?></span>
+                                </div>
+                            </a>
+                            <a href="seguir.php?idseguido=<?= $sugestao['idusuario'] ?>" class="feed-btn-seguir">
+                                Seguir
+                            </a>
                         </div>
                     <?php } ?>
                 <?php } ?>
             </div>
-        </div>
-        <a href="form-criar-post.php" class="btn-criar-post" title="Criar novo post">
-            <i class="bi bi-plus-lg"></i>
-        </a>
-    </main>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+            <div class="feed-suggestions-footer">
+                <a href="usuarios.php" class="btn-ver-mais">Ver Mais</a>
+            </div>
+        </aside>
+    </div>
+
+    <script>
+        // Busca em tempo real
+        const searchInput = document.getElementById('searchInput');
+        const searchResults = document.getElementById('searchResults');
+        let searchTimeout;
+
+        searchInput.addEventListener('input', function() {
+            clearTimeout(searchTimeout);
+            const query = this.value.trim();
+
+            if (query.length < 2) {
+                searchResults.style.display = 'none';
+                searchResults.innerHTML = '';
+                return;
+            }
+
+            searchTimeout = setTimeout(() => {
+                fetch(`buscar-usuarios.php?nome=${encodeURIComponent(query)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.length === 0) {
+                            searchResults.innerHTML = '<div class="feed-search-empty">Nenhum usuário encontrado</div>';
+                            searchResults.style.display = 'block';
+                        } else {
+                            let html = '';
+                            data.forEach(usuario => {
+                                const fotoHtml = usuario.foto 
+                                    ? `<img src="uploads/${usuario.foto}" alt="Perfil" class="feed-search-result-avatar">`
+                                    : `<div class="feed-search-result-avatar-placeholder"><i class="bi bi-person-circle"></i></div>`;
+                                
+                                const seguirBtn = !usuario.ja_segue 
+                                    ? `<a href="seguir.php?idseguido=${usuario.idusuario}" class="feed-search-result-btn">Seguir</a>`
+                                    : '';
+
+                                html += `
+                                    <div class="feed-search-result-item">
+                                        <a href="perfil.php?idusuario=${usuario.idusuario}" class="feed-search-result-user">
+                                            ${fotoHtml}
+                                            <div class="feed-search-result-info">
+                                                <span class="feed-search-result-name">${usuario.nome}</span>
+                                                <span class="feed-search-result-username">@${usuario.nome.toLowerCase().replace(/\s/g, '')}</span>
+                                            </div>
+                                        </a>
+                                        ${seguirBtn}
+                                    </div>
+                                `;
+                            });
+                            searchResults.innerHTML = html;
+                            searchResults.style.display = 'block';
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Erro na busca:', error);
+                        searchResults.innerHTML = '<div class="feed-search-empty">Erro ao buscar usuários</div>';
+                        searchResults.style.display = 'block';
+                    });
+            }, 300);
+        });
+
+        // Fechar resultados ao clicar fora
+        document.addEventListener('click', function(e) {
+            if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
+                searchResults.style.display = 'none';
+            }
+        });
+    </script>
 </body>
 </html>
