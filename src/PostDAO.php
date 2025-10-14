@@ -12,7 +12,6 @@ class PostDAO
         $idusuario = $dados['idusuario'];
         $idcachorro = $dados['idcachorro'];
 
-        // Salvar foto se foi enviada
         $foto = null;
         if (isset($_FILES['foto']) && $_FILES['foto']['error'] === UPLOAD_ERR_OK) {
             $foto = Util::salvarArquivo('foto');

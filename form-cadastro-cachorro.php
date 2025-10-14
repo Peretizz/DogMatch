@@ -60,7 +60,7 @@ require_once "src/CachorroDAO.php";
 
             <div class="mb-3 col-md-12">
                 <label class="form-label">Foto do cachorro</label>
-                <input type="file" class="form-control" name="foto" accept="image/*">
+                <input type="file" class="form-control" name="foto" accept="image/*" required>
             </div>
 
             <div class="mb-3 d-flex gap-3">

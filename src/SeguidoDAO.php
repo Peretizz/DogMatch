@@ -53,7 +53,6 @@
 
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
-        // Dentro da classe SeguidoDAO
         public static function jaSegue($idusuario, $idseguido)
         {
             $conexao = ConexaoBD::conectar();
