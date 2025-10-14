@@ -11,6 +11,8 @@ if ($idusuario !== null && $idseguido !== null) {
     }
 }
 
-$redirect = $_SERVER['HTTP_REFERER'] ?? 'index.php';
-header("Location: $redirect");
+// Redirecionar de volta para a página anterior ou index
+$referer = $_SERVER['HTTP_REFERER'] ?? 'index.php';
+header("Location: $referer");
 exit;
+?>

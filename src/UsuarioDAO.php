@@ -4,7 +4,7 @@ require_once "Util.php";
 
 class UsuarioDAO
 {
-
+    
     public static function cadastrarUsuario($dados)
     {
         $conexao = ConexaoBD::conectar();
@@ -66,8 +66,9 @@ class UsuarioDAO
     {
         $conexao = ConexaoBD::conectar();
         
-        $sql = "SELECT idusuario, nome 
-                FROM Usuarios 
+        // CORREÇÃO: Adicionando 'u.foto' ao SELECT
+        $sql = "SELECT idusuario, nome, foto 
+                FROM usuarios 
                 WHERE nome LIKE :nome 
                 AND idusuario != :idUsuarioLogado"; 
                 
