@@ -75,7 +75,7 @@ $posts = PostDAO::listarPostsSeguidos($idusuario);
                 </a>
             </nav>
             
-            <a href="form-criar-cachorro.php" class="feed-btn-cadastrar">Cadastrar Cachorro</a>
+            <a href="form-cadastro-cachorro.php" class="feed-btn-cadastrar">Cadastrar Cachorro</a>
         </aside>
 
         <main class="feed-main">
