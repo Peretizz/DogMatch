@@ -1,20 +1,20 @@
 <?php
-// Inclui os arquivos necessários
-include "incs/valida-sessao.php"; // Garante que o usuário está logado
+
+include "incs/valida-sessao.php"; 
 require_once "src/CachorroDAO.php";
 
-// Inicializa variáveis
+
 $termo_busca = $_GET['busca'] ?? '';
 $resultados = array();
 
-// Se houver um termo de busca, executa a consulta
+
 if (!empty($termo_busca)) {
-    // Chama o novo método do DAO
+    
     $resultados = CachorroDAO::buscarCachorros($termo_busca);
 }
 
-// O restante do código é necessário para a sidebar
-// O 'usuarios.php' é uma boa opção de link no menu lateral para "Explorar"
+
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -30,9 +30,8 @@ if (!empty($termo_busca)) {
     <div class="feed-container">
         
         <aside class="feed-sidebar">
-            <div class="feed-logo">
-                <img src="img/logo.png" alt="DogMatch" onerror="this.style.display='none'">
-                <h2>DogMatch</h2>
+            <div class="feed-logo"> 
+                <img src="img/logo.png" alt="DogMatch">
             </div>
             
             <nav class="feed-nav">

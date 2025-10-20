@@ -1,7 +1,7 @@
 /* Paleta:
         #679DAB
         #9E6631
-        #DE720D
+         rgba(222, 114, 13, 0.8)
         #36798A
         #5E4935
         #253033*/
@@ -392,7 +392,7 @@ form {
   border: 1px solid #9e6631;
 }
 .btn-deixar-seguir:hover {
-  background-color: #de720d;
+  background-color:  rgba(222, 114, 13, 0.8);
   color: #ffffff;
 }
 
@@ -452,7 +452,7 @@ form {
 }
 
 .stat-number {
-  color: #de720d;
+  color:  rgba(222, 114, 13, 0.8);
   font-size: 1.5rem;
   font-weight: bold;
 }
@@ -565,7 +565,7 @@ form {
 }
 .conversation-item.active {
   background: rgba(103, 157, 171, 0.3);
-  border-left: 3px solid #de720d;
+  border-left: 3px solid  rgba(222, 114, 13, 0.8);
 }
 .chat-area {
   flex: 1;
@@ -596,7 +596,7 @@ form {
 }
 .message-sent {
   align-self: flex-end;
-  background: linear-gradient(135deg, #de720d 0%, #9e6631 100%);
+  background: linear-gradient(135deg,  rgba(222, 114, 13, 0.8) 0%, #9e6631 100%);
   color: white;
   border-radius: 12px 12px 0 12px;
 }
@@ -629,7 +629,7 @@ form {
   color: #679dab;
 }
 
-/* Sidebar Esquerda (Menu) */
+
 .feed-sidebar {
   width: 250px;
   background-color: #253033;
@@ -645,7 +645,7 @@ form {
   z-index: 10;
 }
 
-/* Sidebar Direita (Sugestões) */
+
 .feed-suggestions {
   width: 250px;
   background-color: #e8dcc8;
@@ -660,7 +660,7 @@ form {
   z-index: 9;
 }
 
-/* Área Central - Feed (Onde ficam os posts e a busca) */
+
 .feed-main {
   margin-left: 250px;
   margin-right: 250px;
@@ -674,18 +674,18 @@ form {
   z-index: 5;
 }
 
-/* Ajuste o feed-container para não interferir na centralização: */
+
 .feed-container {
   display: flex;
   justify-content: center;
   align-items: flex-start;
   width: 100%;
   min-height: 100vh;
-  background-color: #de720d;
+  background-color: rgba(222, 114, 13, 0.8);;
   overflow-x: hidden;
 }
 
-/* Ajuste do Z-index para a busca não ser obstruída */
+
 .feed-search-container {
   position: relative;
   margin-bottom: 2rem;
@@ -701,33 +701,33 @@ form {
   z-index: 101;
 }
 
-/* Adicione este CSS na sua folha de estilos (styles.css) ou no <style> */
+
 
 .feed-btn-cadastrar {
-  /* Cor de fundo base: Laranja/Marrom para destaque */
-  background-color: #de720d;
-  color: white; /* Texto branco */
-  display: block; /* Ocupa a largura total da sidebar */
+  
+  background-color:  rgba(222, 114, 13, 0.8);
+  color: white; 
+  display: block; 
   text-align: center;
-  padding: 10px 15px; /* Preenchimento interno */
-  margin-top: 20px; /* Espaço acima do botão */
-  border-radius: 8px; /* Cantos arredondados */
+  padding: 10px 15px; 
+  margin-top: 20px; 
+  border-radius: 8px; 
   font-weight: bold;
-  text-decoration: none; /* Remove sublinhado padrão do link */
+  text-decoration: none; 
   transition: background-color 0.3s ease, transform 0.1s ease;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra para dar profundidade */
-  border: 2px solid #de720d; /* Borda da mesma cor */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+  border: 2px solid  rgba(222, 114, 13, 0.8); 
 }
 
 .feed-btn-cadastrar:hover {
-  /* Um pouco mais escuro ao passar o mouse */
+  
   background-color: #c4640d;
-  /* Efeito de clique */
+  
   transform: translateY(-1px);
   box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
 }
 
-/* Ajuste para o botão Ver Mais */
+
 .feed-btn-ver-mais {
   display: block;
   width: 100%;
@@ -751,15 +751,15 @@ form {
 }
 
 .feed-logo img {
-  width: 50px;
-  height: 50px;
+  width: 200px;
+  height: 200px;
   border-radius: 50%;
 }
 
 .feed-logo h2 {
   font-size: 1.5rem;
   font-weight: bold;
-  color: #de720d;
+  color:  rgba(222, 114, 13, 0.8);
 }
 
 .feed-nav {
@@ -789,7 +789,7 @@ form {
 }
 
 .feed-nav-item.active {
-  background-color: #de720d;
+  background-color:  rgba(222, 114, 13, 0.8);
   color: white;
   border-color: #9e6631;
 }
@@ -867,13 +867,13 @@ form {
   color: inherit;
 }
 
-/* Adicionar estilos para foto nos resultados da busca */
+
 .feed-search-result-avatar {
   width: 40px;
   height: 40px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid #de720d;
+  border: 2px solid  rgba(222, 114, 13, 0.8);
 }
 
 .feed-search-result-avatar-placeholder {
@@ -885,7 +885,7 @@ form {
   align-items: center;
   justify-content: center;
   color: #5e4935;
-  border: 2px solid #de720d;
+  border: 2px solid  rgba(222, 114, 13, 0.8);
 }
 
 .feed-search-result-info {
@@ -900,7 +900,7 @@ form {
 
 .feed-btn-seguir-small {
   padding: 0.5rem 1rem;
-  background-color: #de720d;
+  background-color:  rgba(222, 114, 13, 0.8);
   color: white;
   text-decoration: none;
   border-radius: 8px;
@@ -920,7 +920,7 @@ form {
   color: #5e4935;
 }
 
-/* Header do Usuário */
+
 .feed-header {
   background-color: rgba(255, 255, 255, 0.1);
   padding: 1.5rem;
@@ -960,7 +960,7 @@ form {
   font-weight: bold;
 }
 
-/* Posts */
+
 .feed-posts {
   display: flex;
   flex-direction: column;
@@ -982,8 +982,7 @@ form {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Exemplo de estilização para o nome de usuário dentro de um post,
-   dando destaque sobre o nome do cachorro. */
+
 .post-header .post-user-name {
   font-size: 1.1rem;
   font-weight: bold;
@@ -991,20 +990,20 @@ form {
   margin-bottom: 0.1rem;
 }
 
-/* Remove a sublinha do link */
+
 .post-header .post-user-name a {
   text-decoration: none;
   color: inherit;
 }
 
-/* Garante que o cachorro não tenha o mesmo destaque */
+
 .post-header .post-dog-name {
   font-size: 1rem;
   font-weight: normal;
   color: #9e6631;
 }
 
-/* Garante que o link não tenha sublinhado e herde a cor */
+
 .feed-post-user a {
   text-decoration: none;
   color: inherit;
@@ -1016,7 +1015,7 @@ form {
   gap: 1rem;
   margin-bottom: 1rem;
 }
-/* Estilo para o nome de usuário no cabeçalho do post (para referência) */
+
 .feed-post-username {
   font-size: 1.25rem;
   font-weight: bold;
@@ -1025,16 +1024,16 @@ form {
   margin-bottom: 0.2rem;
 }
 
-/* ----------------------------------------------------------------- */
-/* ESTILIZAÇÃO NA BARRA LATERAL DIREITA (.feed-suggestions) */
-/* ----------------------------------------------------------------- */
+
+
+
 
 .feed-post-avatar {
   width: 45px;
   height: 45px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid #de720d;
+  border: 2px solid  rgba(222, 114, 13, 0.8);
 }
 
 .feed-post-avatar-placeholder {
@@ -1046,7 +1045,7 @@ form {
   align-items: center;
   justify-content: center;
   color: #5e4935;
-  border: 2px solid #de720d;
+  border: 2px solid  rgba(222, 114, 13, 0.8);
 }
 
 .feed-post-user h3 {
@@ -1098,7 +1097,7 @@ form {
 
 .feed-action-btn:hover {
   background-color: #f9f5f0;
-  color: #de720d;
+  color:  rgba(222, 114, 13, 0.8);
 }
 
 .feed-suggestions-header {
@@ -1115,7 +1114,7 @@ form {
   height: 45px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid #de720d;
+  border: 2px solid  rgba(222, 114, 13, 0.8);
 }
 
 .feed-suggestions-avatar-placeholder {
@@ -1127,7 +1126,7 @@ form {
   align-items: center;
   justify-content: center;
   color: #5e4935;
-  border: 2px solid #de720d;
+  border: 2px solid  rgba(222, 114, 13, 0.8);
 }
 
 .feed-suggestions-header span {
@@ -1136,7 +1135,7 @@ form {
 }
 
 .feed-suggestions-title {
-  color: #de720d;
+  color:  rgba(222, 114, 13, 0.8);
   font-size: 1.125rem;
   font-weight: bold;
   margin-bottom: 1rem;
@@ -1175,7 +1174,7 @@ form {
   height: 40px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid #de720d;
+  border: 2px solid  rgba(222, 114, 13, 0.8);
 }
 
 .feed-suggestion-avatar-placeholder {
@@ -1187,7 +1186,7 @@ form {
   align-items: center;
   justify-content: center;
   color: #5e4935;
-  border: 2px solid #de720d;
+  border: 2px solid  rgba(222, 114, 13, 0.8);
 }
 
 .feed-suggestion-info {
@@ -1203,7 +1202,7 @@ form {
 
 .feed-btn-seguir {
   padding: 0.5rem 1rem;
-  background-color: #de720d;
+  background-color:  rgba(222, 114, 13, 0.8);
   color: white;
   text-decoration: none;
   border-radius: 8px;
@@ -1221,12 +1220,12 @@ form {
   background-color: #5e4935;
 }
 
-/* ----------------------------------------------------------------- */
-/* ESTILIZAÇÃO NA BARRA LATERAL DIREITA (.feed-suggestions) */
-/* ----------------------------------------------------------------- */
 
-/* 1. Nome do seu próprio perfil no topo da barra de sugestões */
-/* Força a cor no link e no texto dentro dele */
+
+
+
+
+
 .feed-suggestions-header a,
 .feed-suggestions-header a span {
   text-decoration: none;
@@ -1235,8 +1234,8 @@ form {
   color: #36798a !important;
 }
 
-/* 2. Nome dos usuários sugeridos na lista */
-/* Aplica a cor de forma forte no link e no span */
+
+
 .feed-suggestion-item a.feed-suggestion-name-link,
 .feed-suggestion-name {
   font-weight: bold;
@@ -1244,35 +1243,35 @@ form {
   text-decoration: none;
 }
 
-/* 3. Nome dos usuários nos resultados da busca */
-/* Garante a cor também na busca rápida no centro da tela */
+
+
 .feed-search-result-name {
   font-weight: bold;
   color: #36798a !important;
 }
-/* ----------------------------------------------------------------- */
-/* ESTILOS GERAIS E LAYOUT DO FEED (index.php) */
-/* ----------------------------------------------------------------- */
 
-/* ... (Mantenha todo o CSS do feed-sidebar, feed-main, feed-post, etc. INTOCADO) ... */
 
-/* ================================================================= */
-/* ESTILOS ESPECÍFICOS DA TELA DE PERFIL (perfil.php) */
-/* (Aqui as regras são aplicadas APENAS nas classes usadas em perfil.php) */
-/* ================================================================= */
 
-/* ------------------ Cores de Destaque Unificadas ------------------ */
 
-/* CORREÇÃO MANTIDA: Estilo do nome de usuário no FEED */
+
+
+
+
+
+
+
+
+
+
 .feed-post-username {
   font-size: 1.25rem;
   font-weight: bold;
-  color: #36798a !important; /* Cor de destaque unificada */
+  color: #36798a !important; 
   display: block;
   margin-bottom: 0.2rem;
 }
 
-/* CORREÇÃO MANTIDA: Estilo do nome de usuário nas SUGESTÕES (Sidebar direita) */
+
 .feed-suggestions-header a,
 .feed-suggestions-header a span,
 .feed-suggestion-item a.feed-suggestion-name-link,
@@ -1283,12 +1282,12 @@ form {
   text-decoration: none;
 }
 
-/* ------------------ Layout e Fundo do Perfil ------------------ */
 
-/* Configuração do container principal do perfil: Fundo Laranja/Marrom */
-/* Esta classe só existe dentro de <main> na página perfil.php */
+
+
+
 .profile-container {
-  background-color: #ebc195; /* Cor de fundo principal do perfil */
+  background-color: #ebc195; 
   border-radius: 8px;
   padding: 30px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -1303,14 +1302,14 @@ form {
   margin-bottom: 20px;
 }
 
-/* Foto de Perfil Grande */
+
 .profile-avatar-wrapper {
   width: 150px;
   height: 150px;
   border-radius: 50%;
   overflow: hidden;
   margin-bottom: 15px;
-  border: 4px solid #f8f4ed; /* Borda branca ao redor da foto */
+  border: 4px solid #f8f4ed; 
 }
 
 .profile-avatar-wrapper img {
@@ -1322,11 +1321,11 @@ form {
 .profile-info h2 {
   font-size: 1.8rem;
   font-weight: bold;
-  color: #324c53; /* Nome do usuário em cor escura */
+  color: #324c53; 
   margin-bottom: 5px;
 }
 
-/* ------------------ Estatísticas ------------------ */
+
 .profile-stats {
   display: flex;
   justify-content: center;
@@ -1341,7 +1340,7 @@ form {
 .stat-number {
   font-size: 1.5rem;
   font-weight: bold;
-  color: #de720d; /* Cor de destaque (Laranja DogMatch) */
+  color:  rgba(222, 114, 13, 0.8); 
 }
 
 .stat-label {
@@ -1349,7 +1348,7 @@ form {
   color: #324c53;
 }
 
-/* ------------------ Botões de Ação ------------------ */
+
 .profile-actions {
   display: flex;
   justify-content: center;
@@ -1365,7 +1364,7 @@ form {
   transition: background-color 0.3s;
 }
 
-/* Botão de Edição/Sugestão (Azul Escuro) */
+
 .btn-edit-suggest {
   background-color: #324c53;
   color: #fff;
@@ -1375,9 +1374,9 @@ form {
   color: #fff;
 }
 
-/* Botão de Seguir/Deixar de Seguir (Laranja) */
+
 .btn-follow {
-  background-color: #de720d;
+  background-color:  rgba(222, 114, 13, 0.8);
   color: #fff;
 }
 .btn-follow:hover {
@@ -1385,7 +1384,7 @@ form {
   color: #fff;
 }
 
-/* ------------------ Abas (Posts e Cachorros) ------------------ */
+
 .profile-tabs {
   display: flex;
   justify-content: center;
@@ -1398,7 +1397,7 @@ form {
   text-align: center;
   padding: 10px 0;
   cursor: pointer;
-  background-color: #324c53; /* Cor da aba não selecionada (azul escuro) */
+  background-color: #324c53; 
   color: #f8f4ed;
   font-weight: bold;
   border-radius: 5px;
@@ -1411,47 +1410,273 @@ form {
 }
 
 .profile-tabs-btn.active {
-  background-color: #de720d; /* Cor da aba ativa (laranja de destaque) */
-  color: #324c53; /* Texto em cor escura na aba ativa */
+  background-color:  rgba(222, 114, 13, 0.8); 
+  color: #324c53; 
 }
 
-/* ------------------ Conteúdo (Posts e Cachorros) ------------------ */
+
 .profile-content-section {
   padding: 20px 0;
   min-height: 250px;
 }
 
-/* Estilo para a grade de fotos no perfil */
+
 .dog-grid {
   display: grid;
-  /* Define o número de colunas (ex: 3) */
+  
   grid-template-columns: repeat(3, 1fr);
-  gap: 10px; /* Espaçamento entre as fotos */
+  gap: 10px; 
   margin-top: 20px;
-  padding: 0 10px; /* Adiciona um pequeno padding nas laterais */
+  padding: 0 10px; 
 }
 
-/* IMPORTANTE: ESTE É O ESTILO QUE EVITA O CORTE */
-.dog-grid img {
-  width: 100%; /* Ocupa 100% da célula do grid */
-  height: 100%; /* Ocupa 100% da altura da célula do grid */
 
-  /* Esta linha garante que a imagem preencha a área, mas sem distorcer. */
-  /* Se a foto não for quadrada, ela será cortada para caber no quadrado (cover) */
+.dog-grid img {
+  width: 100%; 
+  height: 100%; 
+
+  
+  
   object-fit: cover;
 
-  /* Esta linha força todas as células do grid a serem quadradas (1:1) */
+  
   aspect-ratio: 1 / 1;
 
-  border-radius: 4px; /* Opcional: bordas arredondadas */
+  border-radius: 4px; 
 }
 
-/* Estilo da seção de Cachorros (Detalhes) */
+
 .dog-card img {
-  /* Ajuste para as fotos dos cachorros listados */
+  
   width: 60px;
   height: 60px;
   border-radius: 50%;
   object-fit: cover;
   margin-right: 15px;
+}
+
+
+
+
+
+
+:root {
+  --color-primary: #679dab;
+  --color-secondary:  rgba(222, 114, 13, 0.8);
+  --color-background: #f8f4ed;
+  --color-card-bg: #ffffff;
+  --color-text-dark: #333;
+  --color-text-light: #666;
+  --border-radius: 8px;
+  --shadow-light: 0 2px 4px rgba(0, 0, 0, 0.05);
+  --shadow-medium: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+
+.config-container {
+  max-width: 800px;
+  margin: 40px auto;
+  background-color: var(--color-card-bg);
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: var(--shadow-medium);
+  border: 1px solid #eee;
+}
+
+
+.config-container h1 {
+  color: var(--color-primary);
+  margin-bottom: 30px;
+  font-size: 2rem;
+  text-align: center;
+}
+
+.config-content h2 {
+  font-size: 1.4rem;
+  color: var(--color-text-dark);
+  margin-bottom: 25px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+
+.config-tabs {
+  display: flex;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #eee;
+}
+
+.config-tabs-btn {
+  padding: 12px 20px;
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--color-text-light);
+  transition: color 0.3s, border-bottom 0.3s;
+  margin-right: 5px;
+  border-radius: var(--border-radius) var(--border-radius) 0 0;
+}
+
+.config-tabs-btn:hover {
+  color: var(--color-primary);
+}
+
+.config-tabs-btn.active {
+  color: var(--color-secondary);
+  border-bottom: 3px solid var(--color-secondary);
+}
+
+
+.alerta-sucesso {
+  background-color: #e6f7ee;
+  color: #389e62;
+  border: 1px solid #b7eb8f;
+  border-radius: var(--border-radius);
+  padding: 15px;
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+.alerta-erro {
+  background-color: #fff1f0;
+  color: #cf1322;
+  border: 1px solid #ffa39e;
+  border-radius: var(--border-radius);
+  padding: 15px;
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+
+.form-group {
+  margin-bottom: 25px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: var(--color-text-dark);
+}
+
+.form-control {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: var(--border-radius);
+  box-sizing: border-box;
+  transition: border-color 0.3s;
+}
+
+.form-control:focus {
+  border-color: var(--color-primary);
+  outline: none;
+}
+
+
+.current-photo {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 20px;
+  border: 5px solid var(--color-primary);
+  box-shadow: 0 0 0 5px rgba(103, 157, 171, 0.2);
+  display: block;
+}
+
+
+.btn-acao {
+  padding: 12px 25px;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-weight: bold;
+  text-decoration: none;
+  transition: background-color 0.3s, transform 0.1s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-salvar {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+.btn-salvar:hover {
+  background-color: #588796;
+  transform: translateY(-1px);
+}
+
+.btn-excluir {
+  background-color: #e74c3c;
+  color: white;
+  font-size: 0.9rem;
+}
+
+.btn-excluir:hover {
+  background-color: #c0392b;
+}
+
+
+.dog-manager-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: var(--border-radius);
+  background-color: #fcfcfc;
+  box-shadow: var(--shadow-light);
+  transition: border-color 0.3s;
+}
+
+.dog-manager-card:hover {
+  border-color: var(--color-secondary);
+}
+
+.dog-manager-card img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-right: 15px;
+  border: 2px solid var(--color-secondary);
+}
+
+.dog-info {
+  flex-grow: 1;
+}
+
+.dog-info strong {
+  color: var(--color-primary);
+  font-size: 1.1rem;
+  display: block;
+}
+
+.dog-info small {
+  color: var(--color-text-light);
+}
+
+.dog-actions a {
+  margin-left: 10px;
+}
+
+
+.dog-placeholder {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #ccc;
+  margin-right: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--color-secondary);
+}
+
+.dog-placeholder i {
+  color: #fff;
+  font-size: 2rem;
 }

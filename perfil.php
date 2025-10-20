@@ -1,39 +1,39 @@
 <?php
-// Inclui os arquivos necessários
+
 include "incs/valida-sessao.php";
 require_once "src/PostDAO.php";
 require_once "src/UsuarioDAO.php";
 require_once "src/SeguidoDAO.php";
 require_once "src/CachorroDAO.php";
 
-// Pega o ID do usuário do perfil da URL, ou usa o ID da sessão se não especificado
+
 $idusuario_perfil = $_GET['idusuario'] ?? $_SESSION['idusuario'];
 $idusuario_logado = $_SESSION['idusuario'];
 
-// Verifica se é o perfil do próprio usuário logado
+
 $eh_proprio_perfil = ($idusuario_perfil == $idusuario_logado);
 
-// Busca dados do usuário do perfil
+
 $usuario_perfil = UsuarioDAO::buscarPorId($idusuario_perfil);
 
 if (!$usuario_perfil) {
-    // Redireciona se o usuário não for encontrado
+
     header("Location: index.php");
     exit;
 }
 
-// Busca os posts do usuário (incluindo o idposts para o link)
-// É crucial que o método 'listarPostsUsuario' retorne o ID do post (ex: idposts)
+
+
 $posts = PostDAO::listarPostsUsuario($idusuario_perfil);
 
-// Vê se já segue o usuário (apenas se não for o próprio perfil)
+
 $ja_segue = false;
 if (!$eh_proprio_perfil) {
     $ja_segue = SeguidoDAO::jaSegue($idusuario_logado, $idusuario_perfil);
 }
 
-// Pega os cachorros do usuário
-$cachorros = CachorroDAO::listar(); // Supondo que listar() retorna todos os cachorros
+
+$cachorros = CachorroDAO::listar();
 $cachorros_usuario = array();
 foreach ($cachorros as $c) {
     if ($c['idusuario'] == $idusuario_perfil) {
@@ -41,7 +41,7 @@ foreach ($cachorros as $c) {
     }
 }
 
-// Puxa as contagens reais do banco de dados
+
 $seguidores_count = SeguidoDAO::contarSeguidores($idusuario_perfil);
 $seguindo_count = SeguidoDAO::contarSeguindo($idusuario_perfil);
 ?>
@@ -69,8 +69,7 @@ $seguindo_count = SeguidoDAO::contarSeguindo($idusuario_perfil);
 
         <aside class="feed-sidebar">
             <div class="feed-logo">
-                <img src="img/logo.png" alt="DogMatch" onerror="this.style.display='none'">
-                <h2>DogMatch</h2>
+                <img src="img/logo.png" alt="DogMatch">
             </div>
 
             <nav class="feed-nav">
@@ -199,10 +198,10 @@ $seguindo_count = SeguidoDAO::contarSeguindo($idusuario_perfil);
                         <?php } else { ?>
                             <div class="dog-grid">
                                 <?php foreach ($posts as $post) {
-                                    // Define a chave correta
+
                                     $id_post = $post['idpost'] ?? null;
 
-                                    // Verifica se a foto e o ID do post existem antes de criar o link
+
                                     if (isset($post['foto']) && $post['foto'] && $id_post) {
                                         ?>
                                         <a href="visualizar-post.php?idpost=<?= htmlspecialchars($id_post) ?>">
@@ -247,7 +246,7 @@ $seguindo_count = SeguidoDAO::contarSeguindo($idusuario_perfil);
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // Script para funcionalidade das Abas
+
             const postsBtn = document.getElementById('tab-posts-btn');
             const cachorrosBtn = document.getElementById('tab-cachorros-btn');
             const postsContent = document.getElementById('tab-posts-content');
@@ -268,7 +267,7 @@ $seguindo_count = SeguidoDAO::contarSeguindo($idusuario_perfil);
                 switchTab(cachorrosBtn, postsBtn, cachorrosContent, postsContent);
             });
 
-            // Estado inicial: Garante que a aba "Publicações" esteja ativa ao carregar
+
             switchTab(postsBtn, cachorrosBtn, postsContent, cachorrosContent);
         });
     </script>

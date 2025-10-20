@@ -7,10 +7,10 @@ require_once "src/SeguidoDAO.php";
 $idusuario = $_SESSION['idusuario'];
 $usuario = UsuarioDAO::buscarPorId($idusuario);
 
-// Buscar sugestões de usuários para seguir (limitado a 8)
+
 $sugestoes = UsuarioDAO::buscarSugestoes($idusuario, 8);
 
-// Buscar posts dos usuários seguidos
+
 $posts = PostDAO::listarPostsSeguidos($idusuario);
 ?>
 <!DOCTYPE html>
@@ -27,20 +27,18 @@ $posts = PostDAO::listarPostsSeguidos($idusuario);
     <div class="feed-container">
         <aside class="feed-sidebar">
             <div class="feed-logo">
-                <img src="img/logo.png" alt="DogMatch" onerror="this.style.display='none'">
-                <h2>DogMatch</h2>
+                <img src="img/logo.png" alt="DogMatch">
             </div>
 
             <nav class="feed-nav">
                 <a href="index.php" class="feed-nav-item active">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>    
                     </svg>
                     <span>Home</span>
                     <svg class="dropdown-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="2">
-                        <polyline points="6 9 12 15 18 9"></polyline>
                     </svg>
                 </a>
 
@@ -53,7 +51,6 @@ $posts = PostDAO::listarPostsSeguidos($idusuario);
                     <span>Postar</span>
                     <svg class="dropdown-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="2">
-                        <polyline points="6 9 12 15 18 9"></polyline>
                     </svg>
                 </a>
 
@@ -64,7 +61,6 @@ $posts = PostDAO::listarPostsSeguidos($idusuario);
                     <span>Mensagens</span>
                     <svg class="dropdown-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="2">
-                        <polyline points="6 9 12 15 18 9"></polyline>
                     </svg>
                 </a>
                 <a href="buscar-cachorros.php" class="feed-nav-item">
@@ -248,7 +244,7 @@ $posts = PostDAO::listarPostsSeguidos($idusuario);
     </div>
 
     <script>
-        // Busca em tempo real
+        
         const searchInput = document.getElementById('searchInput');
         const searchResults = document.getElementById('searchResults');
         let searchTimeout;
@@ -279,7 +275,7 @@ $posts = PostDAO::listarPostsSeguidos($idusuario);
 
                         let html = '';
                         data.forEach(user => {
-                            // VERIFICA SE O CAMPO 'foto' ESTÁ PRESENTE E NÃO ESTÁ VAZIO
+                            
                             const temFoto = user.foto && user.foto.trim() !== '';
 
                             const fotoHtml = temFoto
@@ -314,14 +310,14 @@ $posts = PostDAO::listarPostsSeguidos($idusuario);
                     })
                     .catch(error => {
                         console.error('Erro na busca:', error);
-                        // Opcional: mostrar uma mensagem de erro na interface
-                        // searchResults.innerHTML = '<div class="feed-search-empty">Erro ao carregar dados.</div>';
-                        // searchResults.style.display = 'block';
+                        
+                        
+                        
                     });
             }, 300);
         });
 
-        // Fechar resultados ao clicar fora
+        
         document.addEventListener('click', function (e) {
             if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
                 searchResults.style.display = 'none';

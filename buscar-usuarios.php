@@ -13,12 +13,12 @@ if (strlen($query) < 2) {
     exit;
 }
 
-// CHAMA O DAO QUE AGORA RETORNA A COLUNA 'foto'
+
 $usuarios = UsuarioDAO::buscarUsuarioNome($query, $idusuario);
 
-// Adicionar informação se já está seguindo
+
 foreach ($usuarios as &$usuario) {
-    // A variável $usuario agora contém 'idusuario', 'nome' e 'foto'
+    
     $usuario['jaSeguindo'] = SeguidoDAO::jaSegue($idusuario, $usuario['idusuario']);
 }
 

@@ -1,22 +1,22 @@
 <?php
-// Inclui os arquivos necessários
+
 include "incs/valida-sessao.php";
 require_once "src/UsuarioDAO.php";
 require_once "src/CachorroDAO.php";
 require_once "src/Util.php";
-require_once "src/PostDAO.php"; // Mantido caso você precise listar cachorros a partir daqui
+require_once "src/PostDAO.php";
 
-// Inicia as variáveis
+
 $idusuario_logado = $_SESSION['idusuario'];
 $usuario_logado = UsuarioDAO::buscarPorId($idusuario_logado);
 
-// ATENÇÃO: Verifique onde listarCachorrosUsuario está definido (PostDAO ou CachorroDAO)
+
 $cachorros_usuario = CachorroDAO::listarCachorrosUsuario($idusuario_logado);
 
 $mensagem_sucesso = '';
 $mensagem_erro = '';
 
-// --- Lógica de EDIÇÃO DE FOTO ---
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['acao']) && $_POST['acao'] === 'editar_foto') {
     if (isset($_FILES['foto']) && $_FILES['foto']['error'] === UPLOAD_ERR_OK) {
         $nova_foto = Util::salvarArquivo('foto');
@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['acao']) && $_POST['ac
     }
 }
 
-// --- Lógica de EXCLUSÃO DE CACHORRO ---
+
 if (isset($_GET['acao']) && $_GET['acao'] === 'excluir_cachorro' && isset($_GET['idcachorro'])) {
     $idcachorro_excluir = (int) $_GET['idcachorro'];
 
@@ -45,13 +45,13 @@ if (isset($_GET['acao']) && $_GET['acao'] === 'excluir_cachorro' && isset($_GET[
     }
 }
 
-// Determina qual aba deve estar ativa
+
 $aba_ativa = $_GET['aba'] ?? 'perfil';
 if (!in_array($aba_ativa, ['perfil', 'cachorros'])) {
     $aba_ativa = 'perfil';
 }
 
-// Se a exclusão redirecionou com sucesso
+
 if (isset($_GET['sucesso'])) {
     $mensagem_sucesso = htmlspecialchars($_GET['sucesso']);
 }
@@ -65,238 +65,7 @@ if (isset($_GET['sucesso'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Configurações - DogMatch</title>
     <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-
-    <style>
-        /* Cores base */
-        :root {
-            --color-primary: #679DAB;
-            /* Azul Claro/Água */
-            --color-secondary: #DE720D;
-            /* Laranja/Marrom */
-            --color-background: #F8F4ED;
-            /* Cor de fundo suave */
-            --color-card-bg: #FFFFFF;
-            --color-text-dark: #333;
-            --color-text-light: #666;
-            --border-radius: 8px;
-            --shadow-light: 0 2px 4px rgba(0, 0, 0, 0.05);
-            --shadow-medium: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Estilo do Container Principal */
-        .config-container {
-            max-width: 800px;
-            margin: 40px auto;
-            /* Aumenta a margem superior */
-            background-color: var(--color-card-bg);
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: var(--shadow-medium);
-            border: 1px solid #eee;
-        }
-
-        /* Títulos */
-        .config-container h1 {
-            color: var(--color-primary);
-            margin-bottom: 30px;
-            font-size: 2rem;
-            text-align: center;
-        }
-
-        .config-content h2 {
-            font-size: 1.4rem;
-            color: var(--color-text-dark);
-            margin-bottom: 25px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #f0f0f0;
-        }
-
-        /* Abas de Navegação */
-        .config-tabs {
-            display: flex;
-            margin-bottom: 20px;
-            border-bottom: 2px solid #eee;
-        }
-
-        .config-tabs-btn {
-            padding: 12px 20px;
-            cursor: pointer;
-            font-weight: 600;
-            color: var(--color-text-light);
-            transition: color 0.3s, border-bottom 0.3s;
-            margin-right: 5px;
-            border-radius: var(--border-radius) var(--border-radius) 0 0;
-        }
-
-        .config-tabs-btn:hover {
-            color: var(--color-primary);
-        }
-
-        .config-tabs-btn.active {
-            color: var(--color-secondary);
-            border-bottom: 3px solid var(--color-secondary);
-        }
-
-        /* Alertas */
-        .alerta-sucesso {
-            background-color: #e6f7ee;
-            color: #389e62;
-            border: 1px solid #b7eb8f;
-            border-radius: var(--border-radius);
-        }
-
-        .alerta-erro {
-            background-color: #fff1f0;
-            color: #cf1322;
-            border: 1px solid #ffa39e;
-            border-radius: var(--border-radius);
-        }
-
-        .alerta-sucesso,
-        .alerta-erro {
-            padding: 15px;
-            margin-bottom: 20px;
-            font-weight: 500;
-        }
-
-        /* Formulário e Controles */
-        .form-group {
-            margin-bottom: 25px;
-        }
-
-        .form-group label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 8px;
-            color: var(--color-text-dark);
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: var(--border-radius);
-            box-sizing: border-box;
-            transition: border-color 0.3s;
-        }
-
-        .form-control:focus {
-            border-color: var(--color-primary);
-            outline: none;
-        }
-
-        /* Foto Atual */
-        .current-photo {
-            width: 150px;
-            height: 150px;
-            object-fit: cover;
-            border-radius: 50%;
-            margin-bottom: 20px;
-            border: 5px solid var(--color-primary);
-            box-shadow: 0 0 0 5px rgba(103, 157, 171, 0.2);
-            display: block;
-            /* Para centralizar se necessário */
-        }
-
-        /* Botões */
-        .btn-acao {
-            padding: 12px 25px;
-            border: none;
-            border-radius: var(--border-radius);
-            cursor: pointer;
-            font-weight: bold;
-            text-decoration: none;
-            transition: background-color 0.3s, transform 0.1s;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .btn-salvar {
-            background-color: var(--color-primary);
-            color: white;
-        }
-
-        .btn-salvar:hover {
-            background-color: #588796;
-            transform: translateY(-1px);
-        }
-
-        .btn-excluir {
-            background-color: #E74C3C;
-            /* Vermelho mais forte */
-            color: white;
-            font-size: 0.9rem;
-        }
-
-        .btn-excluir:hover {
-            background-color: #C0392B;
-        }
-
-        /* Gerenciamento de Cães */
-        .dog-manager-card {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 20px;
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
-            border-radius: var(--border-radius);
-            background-color: #fcfcfc;
-            box-shadow: var(--shadow-light);
-            transition: border-color 0.3s;
-        }
-
-        .dog-manager-card:hover {
-            border-color: var(--color-secondary);
-        }
-
-        .dog-manager-card img {
-            width: 60px;
-            height: 60px;
-            object-fit: cover;
-            border-radius: 50%;
-            margin-right: 15px;
-            border: 2px solid var(--color-secondary);
-        }
-
-        .dog-info {
-            flex-grow: 1;
-        }
-
-        .dog-info strong {
-            color: var(--color-primary);
-            font-size: 1.1rem;
-            display: block;
-        }
-
-        .dog-info small {
-            color: var(--color-text-light);
-        }
-
-        .dog-actions a {
-            margin-left: 10px;
-        }
-
-        /* Placeholder para foto de cão/usuário */
-        .dog-placeholder {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background-color: #ccc;
-            margin-right: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 2px solid var(--color-secondary);
-        }
-
-        .dog-placeholder i {
-            color: #fff;
-            font-size: 2rem;
-        }
-    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 </head>
 
 <body style="background-color: var(--color-background);">
@@ -304,15 +73,17 @@ if (isset($_GET['sucesso'])) {
 
         <aside class="feed-sidebar">
             <div class="feed-logo"><img src="img/logo.png" alt="DogMatch" onerror="this.style.display='none'">
-                <h2>DogMatch</h2>
             </div>
             <nav class="feed-nav">
                 <a href="index.php" class="feed-nav-item">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>    
                     </svg>
                     <span>Home</span>
+                    <svg class="dropdown-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2">
+                    </svg>
                 </a>
 
                 <a href="form-criar-post.php" class="feed-nav-item">
@@ -485,12 +256,12 @@ if (isset($_GET['sucesso'])) {
                 tab.addEventListener('click', () => {
                     const tabName = tab.dataset.tab;
                     switchTab(tabName);
-                    // Mantém o nome do arquivo correto
+
                     history.pushState(null, '', `form-editar-usuario.php?aba=${tabName}`);
                 });
             });
 
-            // Ativa a aba inicial ao carregar a página
+
             switchTab(initialTab);
         });
     </script>

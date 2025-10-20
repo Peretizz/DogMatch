@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,7 +11,7 @@
 </head>
 
 <body>
-
+    <?php session_start(); ?>
 
     <nav class="navbar">
         <div class="container">
@@ -50,12 +49,12 @@
                         required>
                 </div>
 
-                <div class="d-grid gap-2 mt-5   ">
+                <div class="d-grid gap-2 mt-5">
                     <button type="submit" class="btn btn-primary">Entrar</button>
                 </div>
 
                 <div class="receba text-center mt-5">
-                    <a style="color:#ffffff">Não tem conta? </a><a href="form-cadastra-usuario.html"
+                    <a style="color:#ffffff">Não tem conta? </a><a href="form-cadastra-usuario.html"
                         style="color: #DE720D">CADASTRE-SE</a>
                 </div>
             </form>
@@ -67,15 +66,12 @@
         crossorigin="anonymous"></script>
 
     <?php
-    session_start();
-
     if (isset($_SESSION['msg']) && !empty($_SESSION['msg'])) {
         $mensagem = htmlspecialchars($_SESSION['msg']);
         echo "<script>alert('$mensagem');</script>";
-        unset($_SESSION['msg']);
+        unset($_SESSION['msg']); 
     }
     ?>
 
 </body>
-
 </html>
