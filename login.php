@@ -23,12 +23,7 @@
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <i class="bi bi-person-circle" style="color: #d4ebf8; font-size: 1.5rem;"></i>
             </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="#">Início</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Sobre</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Contato</a></li>
-                </ul>
+            <div class="collapse">
             </div>
         </div>
     </nav>
@@ -70,6 +65,16 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
+
+    <?php
+    session_start();
+
+    if (isset($_SESSION['msg']) && !empty($_SESSION['msg'])) {
+        $mensagem = htmlspecialchars($_SESSION['msg']);
+        echo "<script>alert('$mensagem');</script>";
+        unset($_SESSION['msg']);
+    }
+    ?>
 
 </body>
 

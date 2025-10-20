@@ -66,7 +66,6 @@ class UsuarioDAO
     {
         $conexao = ConexaoBD::conectar();
 
-        // CORREÇÃO: Adicionando 'u.foto' ao SELECT
         $sql = "SELECT idusuario, nome, foto 
                 FROM usuarios 
                 WHERE nome LIKE :nome 
@@ -115,7 +114,6 @@ class UsuarioDAO
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // Dentro da classe UsuarioDAO
     public static function atualizarFoto($idusuario, $foto_nome)
     {
         $conexao = ConexaoBD::conectar();
