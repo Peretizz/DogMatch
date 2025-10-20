@@ -54,6 +54,14 @@ $seguindo_count = SeguidoDAO::contarSeguindo($idusuario_perfil);
     <title>Perfil - <?= htmlspecialchars($usuario_perfil['nome']) ?></title>
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        .empty-state-icon {
+            font-size: 3rem;
+            color: #DE720D;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+    </style>
 </head>
 
 <body>
@@ -184,8 +192,8 @@ $seguindo_count = SeguidoDAO::contarSeguindo($idusuario_perfil);
 
                     <div class="profile-content-section" id="tab-posts-content">
                         <?php if (count($posts) == 0) { ?>
-                            <div class="text-center" style="color: #555; padding: 2rem;">
-                                <i class="bi bi-inbox" style="font-size: 3rem; color: #DE720D;"></i>
+                            <div class="text-center py-4" style="color: #555;">
+                                <i class="bi bi-inbox empty-state-icon"></i>
                                 <p>Nenhum post ainda.</p>
                             </div>
                         <?php } else { ?>
@@ -224,7 +232,8 @@ $seguindo_count = SeguidoDAO::contarSeguindo($idusuario_perfil);
                                 </div>
                             <?php } ?>
                         <?php } else { ?>
-                            <div class="text-center" style="color: #555; padding: 2rem;">
+                            <div class="text-center py-4" style="color: #555;">
+                                <i class="bi bi-person-bounding-box empty-state-icon"></i>
                                 <p>Nenhum cachorro cadastrado.</p>
                             </div>
                         <?php } ?>
