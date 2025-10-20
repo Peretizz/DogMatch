@@ -4,7 +4,7 @@ require_once "Util.php";
 
 class UsuarioDAO
 {
-    
+
     public static function cadastrarUsuario($dados)
     {
         $conexao = ConexaoBD::conectar();
@@ -13,7 +13,7 @@ class UsuarioDAO
         $email = $dados['email'];
         $senha = $dados['senha'];
         $localizacao = $dados['localizacao'];
-        
+
         $foto = null;
         if (isset($_FILES['foto']) && $_FILES['foto']['error'] == 0) {
             $foto = Util::salvarArquivo('foto');
@@ -48,7 +48,7 @@ class UsuarioDAO
             return false;
         }
     }
-    
+
     public static function listarUsuarios($idusuarios)
     {
         $sql = "SELECT * FROM usuarios WHERE idusuario!=?";
@@ -61,29 +61,29 @@ class UsuarioDAO
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    
+
     public static function buscarUsuarioNome($nome, $idUsuarioLogado)
     {
         $conexao = ConexaoBD::conectar();
-        
+
         // CORREÇÃO: Adicionando 'u.foto' ao SELECT
         $sql = "SELECT idusuario, nome, foto 
                 FROM usuarios 
                 WHERE nome LIKE :nome 
-                AND idusuario != :idUsuarioLogado"; 
-                
+                AND idusuario != :idUsuarioLogado";
+
         $stmt = $conexao->prepare($sql);
-        
+
         $nomeBusca = "%" . $nome . "%";
-        
+
         $stmt->bindParam(':nome', $nomeBusca);
-        $stmt->bindParam(':idUsuarioLogado', $idUsuarioLogado); 
-        
+        $stmt->bindParam(':idUsuarioLogado', $idUsuarioLogado);
+
         $stmt->execute();
-        
+
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    
+
     public static function buscarPorId($idusuario)
     {
         $conexao = ConexaoBD::conectar();
@@ -97,7 +97,7 @@ class UsuarioDAO
     public static function buscarSugestoes($idusuario, $limite = 8)
     {
         $conexao = ConexaoBD::conectar();
-        
+
         $sql = "SELECT u.idusuario, u.nome, u.foto 
                 FROM usuarios u
                 WHERE u.idusuario != :idusuario
@@ -106,13 +106,24 @@ class UsuarioDAO
                 )
                 ORDER BY RAND()
                 LIMIT :limite";
-                
+
         $stmt = $conexao->prepare($sql);
         $stmt->bindParam(':idusuario', $idusuario, PDO::PARAM_INT);
         $stmt->bindParam(':limite', $limite, PDO::PARAM_INT);
         $stmt->execute();
-        
+
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    // Dentro da classe UsuarioDAO
+    public static function atualizarFoto($idusuario, $foto_nome)
+    {
+        $conexao = ConexaoBD::conectar();
+        $sql = "UPDATE usuarios SET foto = :foto WHERE idusuario = :idusuario";
+        $stmt = $conexao->prepare($sql);
+        $stmt->bindParam(':foto', $foto_nome);
+        $stmt->bindParam(':idusuario', $idusuario, PDO::PARAM_INT);
+        return $stmt->execute();
     }
 
 }
