@@ -75,7 +75,7 @@ $posts = PostDAO::listarPostsSeguidos($idusuario);
                 </a>
             </nav>
             
-            <a href="form-criar-cachorro.php" class="feed-btn-cadastrar">Cadastrar Cachorro</a>
+            <a href="form-cadastro-cachorro.php" class="feed-btn-cadastrar">Cadastrar Cachorro</a>
         </aside>
 
         <main class="feed-main">
@@ -96,22 +96,7 @@ $posts = PostDAO::listarPostsSeguidos($idusuario);
                 <div id="searchResults" class="feed-search-results" style="display: none;"></div>
             </div>
 
-            <div class="feed-header">
-                <div class="feed-user-info">
-                    <?php if (!empty($usuario['foto']) && file_exists("uploads/" . $usuario['foto'])) { ?>
-                        <img src="uploads/<?= htmlspecialchars($usuario['foto']) ?>" alt="Foto de perfil" class="feed-user-avatar">
-                    <?php } else { ?>
-                        <div class="feed-user-avatar-placeholder">
-                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                                <circle cx="12" cy="7" r="4"></circle>
-                            </svg>
-                        </div>
-                    <?php } ?>
-                    <h2><?= htmlspecialchars($usuario['nome']) ?></h2>
-                </div>
-            </div>
-
+            
             <div class="feed-posts">
                 <?php if (empty($posts)) { ?>
                     <div class="feed-empty">
@@ -133,12 +118,14 @@ $posts = PostDAO::listarPostsSeguidos($idusuario);
                                 <?php } ?>
                                 <div class="feed-post-user">
                                     <a href="perfil.php?idusuario=<?= htmlspecialchars($post['idusuario']) ?>">
-                                        <h3><?= htmlspecialchars($post['nome_usuario']) ?></h3>
-                                    </a>
+    <span class="feed-post-username"><?= htmlspecialchars($post['nome_usuario']) ?></span>
+</a>
+<span class="feed-post-date">
+</span>
                                     <span class="feed-post-date">
                                         <?php 
-                                        if (isset($post['data']) && !empty($post['data']) && $post['data'] != '0000-00-00 00:00:00') {
-                                            $timestamp = strtotime($post['data']);
+                                        if (isset($post['data_criacao']) && !empty($post['data_criacao']) && $post['data_criacao'] != '0000-00-00 00:00:00') {
+                                            $timestamp = strtotime($post['data_criacao']);
                                             if ($timestamp > 0) {
                                                 echo date('d/m/Y H:i', $timestamp);
                                             } else {
@@ -152,8 +139,8 @@ $posts = PostDAO::listarPostsSeguidos($idusuario);
                                 </div>
                             </div>
                             
-                            <?php if (!empty($post['texto'])) { ?>
-                                <p class="feed-post-text"><?= nl2br(htmlspecialchars($post['texto'])) ?></p>
+                            <?php if (!empty($post['conteudo'])) { ?>
+                                <p class="feed-post-text"><?= nl2br(htmlspecialchars($post['conteudo'])) ?></p>
                             <?php } ?>
                             
                             <?php if (!empty($post['foto']) && file_exists("uploads/" . $post['foto'])) { ?>

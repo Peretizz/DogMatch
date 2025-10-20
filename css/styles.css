@@ -630,24 +630,127 @@ form {
   color: #679dab;
 }
 
-/* Feed Layout - Index.php */
-.feed-container {
-  display: flex;
-  min-height: 100vh;
-  background-color: #de720d;
-}
 
-/* Sidebar Esquerda */
+/* Sidebar Esquerda (Menu) */
 .feed-sidebar {
-  width: 280px;
+  width: 250px; /* Largura padronizada */
   background-color: #253033;
   padding: 2rem 1.5rem;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
-  position: sticky;
+  /* MUDANÇA CRUCIAL: Fixa o elemento na viewport */
+  position: fixed; 
   top: 0;
-  height: 100vh;
+  left: 0; /* Alinha na esquerda */
+  height: 100vh; /* Ocupa a altura total da tela */
+  box-sizing: border-box; 
+  z-index: 10; 
+}
+
+/* Sidebar Direita (Sugestões) */
+.feed-suggestions {
+  width: 250px; /* Largura padronizada */
+  background-color: #e8dcc8;
+  padding: 2rem 1.5rem;
+  box-sizing: border-box; 
+  /* MUDANÇA CRUCIAL: Fixa o elemento na viewport */
+  position: fixed; 
+  top: 0;
+  right: 0; /* Alinha na direita */
+  height: 100vh; /* Ocupa a altura total da tela */
+  overflow-y: auto; /* Permite rolar o conteúdo INTERNO */
+  z-index: 9; 
+}
+
+/* Área Central - Feed (Onde ficam os posts e a busca) */
+.feed-main {
+  /* REMOVIDAS: as margens fixas que usamos antes
+     margin-left: 250px; 
+     margin-right: 250px; */
+  
+  /* Largura total que o main pode ocupar, incluindo padding */
+  width: 600px; 
+  max-width: 600px; /* Mantém a largura máxima */
+  
+  /* CRUCIAL PARA CENTRALIZAR: Usa margens automáticas para centralizar
+     o bloco no espaço restante que NÃO está ocupado pelas sidebars fixas. */
+  margin: 0 auto;
+  
+  flex-shrink: 0; 
+  padding: 2rem 1.5rem;
+  min-height: 100vh; 
+  box-sizing: border-box;
+  z-index: 5;
+}
+
+/* Ajuste o feed-container para não interferir na centralização: */
+.feed-container {
+  display: flex; 
+  justify-content: center; /* Manter este, mas o margin: auto é que fará o trabalho */
+  align-items: flex-start; 
+  width: 100%;
+  min-height: 100vh;
+  background-color: #de720d;
+  overflow-x: hidden;
+}
+
+
+/* Ajuste do Z-index para a busca não ser obstruída */
+.feed-search-container {
+  position: relative;
+  margin-bottom: 2rem;
+  z-index: 100; 
+}
+
+.feed-search-results {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  left: 0;
+  right: 0;
+  /* ... outros estilos ... */
+  /* Mantendo um valor alto, apenas por garantia */
+  z-index: 101; 
+}
+
+/* Removi os estilos de largura e display 'block' do .feed-btn-cadastrar
+   na seção original, pois ele já estava definido com width: 100% no original.
+   O problema de "sair da div" geralmente está ligado a um padding excessivo
+   ou ao 'box-sizing'. Como já usamos box-sizing: border-box no body, vamos
+   garantir que ele se ajuste. */
+.feed-btn-cadastrar {
+  display: block;
+  width: 100%; /* Garante que não ultrapasse a largura do pai */
+  padding: 0.875rem 1rem;
+  background-color: #e8dcc8;
+  color: #253033;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 12px;
+  font-weight: 600;
+  margin-top: 1rem;
+  transition: all 0.2s;
+  border: 2px solid #9e6631;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  box-sizing: border-box; /* Garante que o padding não aumente a largura total */
+}
+
+
+/* Ajuste para o botão Ver Mais */
+.feed-btn-ver-mais {
+  display: block;
+  width: 100%; /* Garante que não ultrapasse a largura do pai */
+  padding: 0.875rem;
+  background-color: #9e6631;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.2s;
+  box-sizing: border-box; /* Garante que o padding não aumente a largura total */
 }
 
 .feed-logo {
@@ -715,43 +818,9 @@ form {
   opacity: 0.6;
 }
 
-/* Ajustar botão Cadastrar Cachorro para caber no menu */
-.feed-btn-cadastrar {
-  display: block;
-  width: 100%;
-  padding: 0.875rem 1rem;
-  background-color: #e8dcc8;
-  color: #253033;
-  text-align: center;
-  text-decoration: none;
-  border-radius: 12px;
-  font-weight: 600;
-  margin-top: 1rem;
-  transition: all 0.2s;
-  border: 2px solid #9e6631;
-  font-size: 0.9rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
 .feed-btn-cadastrar:hover {
   background-color: #9e6631;
   color: white;
-}
-
-/* Área Central - Feed */
-.feed-main {
-  flex: 1;
-  max-width: 600px;
-  padding: 2rem 1.5rem;
-  overflow-y: auto;
-}
-
-/* Barra de Pesquisa */
-.feed-search-container {
-  position: relative;
-  margin-bottom: 2rem;
 }
 
 .feed-search-wrapper {
@@ -781,20 +850,6 @@ form {
 .feed-search-input:focus {
   border-color: #5e4935;
   box-shadow: 0 0 0 3px rgba(158, 102, 49, 0.1);
-}
-
-.feed-search-results {
-  position: absolute;
-  top: calc(100% + 0.5rem);
-  left: 0;
-  right: 0;
-  background-color: white;
-  border: 2px solid #9e6631;
-  border-radius: 12px;
-  max-height: 400px;
-  overflow-y: auto;
-  z-index: 1000;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .feed-search-result-item {
@@ -849,10 +904,6 @@ form {
   flex-direction: column;
 }
 
-.feed-search-result-name {
-  font-weight: 600;
-  color: #253033;
-}
 
 .feed-search-result-username {
   font-size: 0.875rem;
@@ -943,13 +994,79 @@ form {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
+/* Exemplo de estilização para o nome de usuário dentro de um post,
+   dando destaque sobre o nome do cachorro. */
+.post-header .post-user-name {
+    font-size: 1.1rem; /* Um pouco maior que o nome do cachorro */
+    font-weight: bold; 
+    color: #36798A; /* Uma das cores da sua paleta, para destacar */
+    margin-bottom: 0.1rem; /* Pequena margem para separar do nome do cachorro */
+}
+
+/* Remove a sublinha do link */
+.post-header .post-user-name a {
+    text-decoration: none;
+    color: inherit; /* Mantém a cor do .post-user-name */
+}
+
+/* Garante que o cachorro não tenha o mesmo destaque */
+.post-header .post-dog-name {
+    font-size: 1rem;
+    font-weight: normal;
+    color: #9E6631;
+}
+
+/* Garante que o link não tenha sublinhado e herde a cor */
+.feed-post-user a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Estilo para o nome de usuário na barra de sugestões (Sugestões para você) */
+.feed-suggestion-name-link {
+    text-decoration: none;
+    color: inherit; /* Garante que não tenha sublinhado */
+}
+
 .feed-post-header {
   display: flex;
   align-items: center;
   gap: 1rem;
   margin-bottom: 1rem;
 }
+/* Estilo para o nome de usuário no cabeçalho do post (para referência) */
+.feed-post-username {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #36798A; /* COR PADRÃO DEFINIDA */
+    display: block;
+    margin-bottom: 0.2rem;
+}
 
+/* ----------------------------------------------------------------- */
+/* ESTILIZAÇÃO NA BARRA LATERAL DIREITA (.feed-suggestions) */
+/* ----------------------------------------------------------------- */
+
+/* 1. Nome do seu próprio perfil no topo da barra de sugestões */
+.feed-suggestions-header a {
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.25rem; 
+    color: #36798A; /* Aplica a cor de destaque */
+}
+
+/* 2. Nome dos usuários sugeridos na lista */
+.feed-suggestion-name {
+    font-weight: bold;
+    color: #36798A; /* Aplica a cor de destaque */
+}
+
+/* 3. Nome dos usuários nos resultados da busca (opcional, se usar CSS) */
+/* A busca é manipulada principalmente pelo JavaScript, mas é bom ter o estilo base */
+.feed-search-result-name {
+    font-weight: bold;
+    color: #36798A; /* Aplica a cor de destaque */
+}
 .feed-post-avatar {
   width: 45px;
   height: 45px;
@@ -1020,18 +1137,6 @@ form {
 .feed-action-btn:hover {
   background-color: #f9f5f0;
   color: #de720d;
-}
-
-/* Remover espaço à direita das sugestões */
-/* Sidebar Direita - Sugestões */
-.feed-suggestions {
-  width: 320px;
-  background-color: #e8dcc8;
-  padding: 2rem 1.5rem;
-  overflow-y: auto;
-  max-height: 100vh;
-  position: sticky;
-  top: 0;
 }
 
 .feed-suggestions-header {
@@ -1129,12 +1234,6 @@ form {
   flex-direction: column;
 }
 
-.feed-suggestion-name {
-  font-weight: 600;
-  color: #253033;
-  font-size: 0.9rem;
-}
-
 .feed-suggestion-username {
   font-size: 0.8rem;
   color: #5e4935;
@@ -1154,19 +1253,6 @@ form {
 
 .feed-btn-seguir:hover {
   background-color: #9e6631;
-}
-
-.feed-btn-ver-mais {
-  display: block;
-  width: 100%;
-  padding: 0.875rem;
-  background-color: #9e6631;
-  color: white;
-  text-align: center;
-  text-decoration: none;
-  border-radius: 8px;
-  font-weight: 600;
-  transition: all 0.2s;
 }
 
 .feed-btn-ver-mais:hover {
