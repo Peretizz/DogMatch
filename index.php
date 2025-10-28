@@ -3,13 +3,13 @@ include "incs/valida-sessao.php";
 require_once "src/UsuarioDAO.php";
 require_once "src/PostDAO.php";
 require_once "src/SeguidoDAO.php";
+require_once "src/CurtidaDAO.php";
+require_once "src/ComentarioDAO.php";
 
 $idusuario = $_SESSION['idusuario'];
 $usuario = UsuarioDAO::buscarPorId($idusuario);
 
-
 $sugestoes = UsuarioDAO::buscarSugestoes($idusuario, 8);
-
 
 $posts = PostDAO::listarPostsSeguidos($idusuario);
 ?>
@@ -111,8 +111,12 @@ $posts = PostDAO::listarPostsSeguidos($idusuario);
                         <p>Nenhum post para mostrar. Siga outros usuários para ver posts no seu feed!</p>
                     </div>
                 <?php } else { ?>
-                    <?php foreach ($posts as $post) { ?>
-                        <article class="feed-post">
+                    <?php foreach ($posts as $post) { 
+                        $totalCurtidas = CurtidaDAO::contarCurtidas($post['idpost']);
+                        $jaCurtiu = CurtidaDAO::jaCurtiu($post['idpost'], $idusuario);
+                        $totalComentarios = ComentarioDAO::contarComentarios($post['idpost']);
+                    ?>
+                        <article class="feed-post" data-post-id="<?= $post['idpost'] ?>">
                             <div class="feed-post-header">
                                 <?php if (!empty($post['foto_usuario']) && file_exists("uploads/" . $post['foto_usuario'])) { ?>
                                     <img src="uploads/<?= htmlspecialchars($post['foto_usuario']) ?>" alt="Foto de perfil"
@@ -159,29 +163,38 @@ $posts = PostDAO::listarPostsSeguidos($idusuario);
                                 </div>
                             <?php } ?>
 
+                            <!-- Atualizado os botões de ação: curtir funcional, comentar funcional, removido compartilhar -->
                             <div class="feed-post-actions">
-                                <button class="feed-action-btn">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                        stroke-width="2">
-                                        <path
-                                            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
-                                        </path>
+                                <button class="feed-action-btn btn-curtir <?= $jaCurtiu ? 'curtido' : '' ?>" 
+                                        data-post-id="<?= $post['idpost'] ?>"
+                                        title="<?= $jaCurtiu ? 'Descurtir' : 'Curtir' ?>">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="<?= $jaCurtiu ? 'currentColor' : 'none' ?>" 
+                                         stroke="currentColor" stroke-width="2">
+                                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
                                     </svg>
+                                    <span class="contador-curtidas"><?= $totalCurtidas > 0 ? $totalCurtidas : '' ?></span>
                                 </button>
-                                <button class="feed-action-btn">
+                                <button class="feed-action-btn btn-comentar" 
+                                        data-post-id="<?= $post['idpost'] ?>"
+                                        title="Comentar">
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                         stroke-width="2">
                                         <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                                     </svg>
+                                    <span class="contador-comentarios"><?= $totalComentarios > 0 ? $totalComentarios : '' ?></span>
                                 </button>
-                                <button class="feed-action-btn">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                        stroke-width="2">
-                                        <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
-                                        <polyline points="16 6 12 2 8 6"></polyline>
-                                        <line x1="12" y1="2" x2="12" y2="15"></line>
-                                    </svg>
-                                </button>
+                            </div>
+
+                            <!-- Seção de comentários -->
+                            <div class="feed-post-comentarios" id="comentarios-<?= $post['idpost'] ?>" style="display: none;">
+                                <div class="comentarios-lista"></div>
+                                <div class="comentario-form">
+                                    <input type="text" 
+                                           class="comentario-input" 
+                                           placeholder="Escreva um comentário..."
+                                           data-post-id="<?= $post['idpost'] ?>">
+                                    <button class="comentario-enviar" data-post-id="<?= $post['idpost'] ?>">Enviar</button>
+                                </div>
                             </div>
                         </article>
                     <?php } ?>
@@ -244,7 +257,6 @@ $posts = PostDAO::listarPostsSeguidos($idusuario);
     </div>
 
     <script>
-        
         const searchInput = document.getElementById('searchInput');
         const searchResults = document.getElementById('searchResults');
         let searchTimeout;
@@ -275,7 +287,6 @@ $posts = PostDAO::listarPostsSeguidos($idusuario);
 
                         let html = '';
                         data.forEach(user => {
-                            
                             const temFoto = user.foto && user.foto.trim() !== '';
 
                             const fotoHtml = temFoto
@@ -310,20 +321,159 @@ $posts = PostDAO::listarPostsSeguidos($idusuario);
                     })
                     .catch(error => {
                         console.error('Erro na busca:', error);
-                        
-                        
-                        
                     });
             }, 300);
         });
 
-        
         document.addEventListener('click', function (e) {
             if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
                 searchResults.style.display = 'none';
             }
         });
+
+        document.querySelectorAll('.btn-curtir').forEach(btn => {
+    btn.addEventListener('click', function() {
+        const postId = this.dataset.postId;
+        const formData = new FormData();
+        formData.append('idpost', postId);
+
+        fetch('curtir-post.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const svg = this.querySelector('svg');
+                const contador = this.querySelector('.contador-curtidas');
+                
+                if (data.curtido) {
+                    this.classList.add('curtido');
+                    svg.setAttribute('fill', 'currentColor');
+                    this.title = 'Descurtir';
+                } else {
+                    this.classList.remove('curtido');
+                    svg.setAttribute('fill', 'none');
+                    this.title = 'Curtir';
+                }
+                
+                contador.textContent = data.total > 0 ? data.total : '';
+            }
+        })
+        .catch(error => console.error('Erro ao curtir:', error));
+    });
+});
+
+document.querySelectorAll('.btn-comentar').forEach(btn => {
+    btn.addEventListener('click', function() {
+        const postId = this.dataset.postId;
+        const comentariosDiv = document.getElementById(`comentarios-${postId}`);
+        
+        if (comentariosDiv.style.display === 'none') {
+            // Carregar comentários
+            fetch(`listar-comentarios.php?idpost=${postId}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const listaComentarios = comentariosDiv.querySelector('.comentarios-lista');
+                        listaComentarios.innerHTML = '';
+                        
+                        data.comentarios.forEach(comentario => {
+                            // Formatar data
+                            let dataFormatada = 'Data não disponível';
+                            if (comentario.data_criacao && comentario.data_criacao !== '0000-00-00 00:00:00') {
+                                const timestamp = new Date(comentario.data_criacao).getTime();
+                                if (timestamp > 0) {
+                                    dataFormatada = new Date(timestamp).toLocaleString('pt-BR', {
+                                        day: '2-digit',
+                                        month: '2-digit',
+                                        year: 'numeric',
+                                        hour: '2-digit',
+                                        minute: '2-digit'
+                                    });
+                                }
+                            }
+                            
+                            const comentarioHtml = `
+                                <div class="comentario-item">
+                                    <div class="comentario-header">
+                                        ${comentario.foto_usuario ? 
+                                            `<img src="uploads/${comentario.foto_usuario}" alt="${comentario.nome_usuario}" class="comentario-avatar">` :
+                                            `<div class="comentario-avatar-placeholder">
+                                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                                    <circle cx="12" cy="7" r="4"></circle>
+                                                </svg>
+                                            </div>`
+                                        }
+                                        <span class="comentario-autor">${comentario.nome_usuario}</span>
+                                        <span class="comentario-data">${dataFormatada}</span>
+                                    </div>
+                                    <p class="comentario-texto">${comentario.conteudo}</p>
+                                </div>
+                            `;
+                            listaComentarios.innerHTML += comentarioHtml;
+                        });
+                        
+                        comentariosDiv.style.display = 'block';
+                    }
+                })
+                .catch(error => console.error('Erro ao carregar comentários:', error));
+        } else {
+            comentariosDiv.style.display = 'none';
+        }
+    });
+});
+
+document.querySelectorAll('.comentario-enviar').forEach(btn => {
+    btn.addEventListener('click', function() {
+        const postId = this.dataset.postId;
+        const input = document.querySelector(`.comentario-input[data-post-id="${postId}"]`);
+        const conteudo = input.value.trim();
+        
+        if (!conteudo) {
+            alert('Digite um comentário');
+            return;
+        }
+        
+        const formData = new FormData();
+        formData.append('idpost', postId);
+        formData.append('conteudo', conteudo);
+        
+        fetch('adicionar-comentario.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                input.value = '';
+                
+                // Atualizar contador
+                const btnComentar = document.querySelector(`.btn-comentar[data-post-id="${postId}"]`);
+                const contador = btnComentar.querySelector('.contador-comentarios');
+                contador.textContent = data.total;
+                
+                // Recarregar comentários
+                btnComentar.click();
+                btnComentar.click();
+            } else {
+                alert(data.message || 'Erro ao adicionar comentário');
+            }
+        })
+        .catch(error => console.error('Erro ao enviar comentário:', error));
+    });
+});
+
+document.querySelectorAll('.comentario-input').forEach(input => {
+    input.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            const postId = this.dataset.postId;
+            const btnEnviar = document.querySelector(`.comentario-enviar[data-post-id="${postId}"]`);
+            btnEnviar.click();
+        }
+    });
+});
     </script>
 </body>
-
 </html>
