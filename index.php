@@ -406,7 +406,6 @@ $posts = PostDAO::listarPostsSeguidos($idusuario);
                 console.log('[v0] Abrindo comentários do post:', postId);
                 
                 if (comentariosDiv.style.display === 'none') {
-                    // Carregar comentários
                     fetch(`listar-comentarios.php?idpost=${postId}`)
                         .then(response => response.json())
                         .then(data => {
@@ -416,7 +415,6 @@ $posts = PostDAO::listarPostsSeguidos($idusuario);
                                 listaComentarios.innerHTML = '';
                                 
                                 data.comentarios.forEach(comentario => {
-                                    // Formatar data
                                     let dataFormatada = 'Data não disponível';
                                     if (comentario.data_criacao && comentario.data_criacao !== '0000-00-00 00:00:00') {
                                         const timestamp = new Date(comentario.data_criacao).getTime();

@@ -6,6 +6,8 @@
           #5E4935
           #253033*/
 
+          /*Adicionar o metodo excluir no vizualizar-post, não mostrar o post do próprio usuário no index, mostrar quem está seguindo e quem segue ao clicar no perfil e fazer o direct de mensagens*/
+
   body {
     background-color: rgba(222, 114, 13, 0.8);
     display: flex;
@@ -1692,4 +1694,40 @@
     color: #666;
     font-size: 0.8em;
     margin-left: 8px;
+}
+
+/* Adicionando estilos para botões de excluir */
+.feed-post-delete {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  color: #999;
+  transition: color 0.2s;
+  margin-left: auto;
+}
+
+.feed-post-delete:hover {
+  color: #e74c3c;
+}
+
+.comentario-delete {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  color: #999;
+  transition: color 0.2s;
+  margin-left: auto;
+}
+
+.comentario-delete:hover {
+  color: #e74c3c;
+}
+
+.comentario-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
 }
