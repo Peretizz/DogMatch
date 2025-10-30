@@ -84,7 +84,6 @@ require_once "src/CachorroDAO.php";
                 </div>
             </div>
 
-            <!-- Alterado para buscar sexos do banco de dados e usar idsexo -->
             <div class="mb-3 col-md-12">
                 <label class="form-label">Sexo</label>
                 <select name="idsexo" class="form-select form-control" required>
