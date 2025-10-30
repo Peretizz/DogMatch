@@ -12,6 +12,7 @@ class CachorroDAO
         $peso = $dados['peso'];
         $vacinacao = $dados['vacinacao'];
         $idade = $dados['idade'];
+        $idsexo = $dados['idsexo'];
         $idusuario = $_SESSION['idusuario'];
 
         $foto = '';
@@ -21,8 +22,8 @@ class CachorroDAO
             move_uploaded_file($_FILES['foto']['tmp_name'], 'uploads/' . $foto);
         }
 
-        $sql = "INSERT INTO cachorros (nome, foto, peso, vacinacao, idade, idusuario, idraca) 
-                VALUES (:nome, :foto, :peso, :vacinacao, :idade, :idusuario, :idraca)";
+        $sql = "INSERT INTO cachorros (nome, foto, peso, vacinacao, idade, idsexo, idusuario, idraca) 
+                VALUES (:nome, :foto, :peso, :vacinacao, :idade, :idsexo, :idusuario, :idraca)";
 
         $stmt = $conexao->prepare($sql);
         $stmt->bindParam(':nome', $nome);
@@ -30,6 +31,7 @@ class CachorroDAO
         $stmt->bindParam(':peso', $peso);
         $stmt->bindParam(':vacinacao', $vacinacao);
         $stmt->bindParam(':idade', $idade);
+        $stmt->bindParam(':idsexo', $idsexo);
         $stmt->bindParam(':idusuario', $idusuario);
         $stmt->bindParam(':idraca', $idraca);
 
@@ -40,15 +42,17 @@ class CachorroDAO
     {
         $conexao = ConexaoBD::conectar();
 
-        $sql = "SELECT c.*, r.nome as raca 
+        $sql = "SELECT c.*, r.nome as raca, s.sexo as sexo
                 FROM cachorros c 
-                LEFT JOIN racas r ON c.idraca = r.idraca";
+                LEFT JOIN racas r ON c.idraca = r.idraca
+                LEFT JOIN sexos s ON c.idsexo = s.idsexo";
 
         $stmt = $conexao->prepare($sql);
         $stmt->execute();
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    
     public static function listarRacas()
     {
         $conexao = ConexaoBD::conectar();
@@ -60,6 +64,19 @@ class CachorroDAO
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    
+    public static function listarSexos()
+    {
+        $conexao = ConexaoBD::conectar();
+
+        $sql = "SELECT * FROM sexos";
+
+        $stmt = $conexao->prepare($sql);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    
     public static function buscarCachorros($termo)
     {
         $conexao = ConexaoBD::conectar();
@@ -67,10 +84,11 @@ class CachorroDAO
         // Usamos LIKE para buscar o termo em qualquer parte do nome ou raça
         $termoBusca = '%' . $termo . '%';
 
-        $sql = "SELECT c.*, r.nome as raca, u.nome as nome_usuario
+        $sql = "SELECT c.*, r.nome as raca, u.nome as nome_usuario, s.sexo as sexo
                 FROM cachorros c 
                 LEFT JOIN racas r ON c.idraca = r.idraca
                 LEFT JOIN usuarios u ON c.idusuario = u.idusuario
+                LEFT JOIN sexos s ON c.idsexo = s.idsexo
                 WHERE c.nome LIKE :termoBusca 
                 OR r.nome LIKE :termoBusca";
 
@@ -80,7 +98,7 @@ class CachorroDAO
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    // Dentro da classe CachorroDAO
+    
     public static function excluirCachorro($idcachorro, $idusuario_logado)
     {
         $conexao = ConexaoBD::conectar();
@@ -91,7 +109,6 @@ class CachorroDAO
         $stmt->bindParam(':idusuario', $idusuario_logado, PDO::PARAM_INT);
         return $stmt->execute();
     }
-// Dentro da classe CachorroDAO.php
 
 /**
  * Lista todos os cachorros pertencentes a um usuário específico.
@@ -100,10 +117,10 @@ public static function listarCachorrosUsuario($idusuario)
 {
     $conexao = ConexaoBD::conectar();
 
-    // Nota: Assumimos que a tabela cachorros tem uma coluna idraca
-    $sql = "SELECT c.*, r.nome as raca 
+    $sql = "SELECT c.*, r.nome as raca, s.sexo as sexo
             FROM cachorros c 
             LEFT JOIN racas r ON c.idraca = r.idraca
+            LEFT JOIN sexos s ON c.idsexo = s.idsexo
             WHERE c.idusuario = :idusuario";
 
     $stmt = $conexao->prepare($sql);

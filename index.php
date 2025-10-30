@@ -134,6 +134,22 @@ $posts = PostDAO::listarPostsSeguidos($idusuario);
                                     <a href="perfil.php?idusuario=<?= htmlspecialchars($post['idusuario']) ?>">
                                         <span class="feed-post-username"><?= htmlspecialchars($post['nome_usuario']) ?></span>
                                     </a>
+                                    <!-- Removendo emoji de cachorro e adicionando sexo e raça -->
+                                    <?php if (!empty($post['nome_cachorro'])) { ?>
+                                        <span class="feed-post-dog-info" style="display: block; font-size: 0.85rem; color: #666; margin-top: 2px;">
+                                            <?= htmlspecialchars($post['nome_cachorro']) ?>
+                                            <?php if (!empty($post['sexo_cachorro'])) { ?>
+                                                <span style="color: <?= $post['sexo_cachorro'] == 'Macho' ? '#1E88E5' : '#D81B60' ?>; font-weight: bold; margin-left: 4px; font-size: 1rem;">
+                                                    <?= $post['sexo_cachorro'] == 'Macho' ? '♂' : '♀' ?>
+                                                </span>
+                                            <?php } ?>
+                                            <?php if (!empty($post['raca_cachorro'])) { ?>
+                                                <span style="color: #555; margin-left: 6px; font-weight: 500;">
+                                                    • <?= htmlspecialchars($post['raca_cachorro']) ?>
+                                                </span>
+                                            <?php } ?>
+                                        </span>
+                                    <?php } ?>
                                     <span class="feed-post-date">
                                     </span>
                                     <span class="feed-post-date">
@@ -151,6 +167,17 @@ $posts = PostDAO::listarPostsSeguidos($idusuario);
                                         ?>
                                     </span>
                                 </div>
+                                <!-- Adicionando botão de excluir post -->
+                                <?php if ($post['idusuario'] == $idusuario) { ?>
+                                    <button class="feed-post-delete" data-post-id="<?= $post['idpost'] ?>" title="Excluir post">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <polyline points="3 6 5 6 21 6"></polyline>
+                                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                            <line x1="10" y1="11" x2="10" y2="17"></line>
+                                            <line x1="14" y1="11" x2="14" y2="17"></line>
+                                        </svg>
+                                    </button>
+                                <?php } ?>
                             </div>
 
                             <?php if (!empty($post['conteudo'])) { ?>
@@ -257,6 +284,8 @@ $posts = PostDAO::listarPostsSeguidos($idusuario);
     </div>
 
     <script>
+        console.log('[v0] Iniciando scripts do feed');
+        
         const searchInput = document.getElementById('searchInput');
         const searchResults = document.getElementById('searchResults');
         let searchTimeout;
@@ -294,26 +323,26 @@ $posts = PostDAO::listarPostsSeguidos($idusuario);
                                 : '';
 
                             const placeholderHtml = `
-                                    <div class="feed-search-result-avatar-placeholder" style="${temFoto ? 'display: none;' : ''}">
-                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                                            <circle cx="12" cy="7" r="4"></circle>
-                                        </svg>
-                                    </div>
-                                `;
+                                <div class="feed-search-result-avatar-placeholder" style="${temFoto ? 'display: none;' : ''}">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                        <circle cx="12" cy="7" r="4"></circle>
+                                    </svg>
+                                </div>
+                            `;
 
                             html += `
-                                    <div class="feed-search-result-item">
-                                        <a href="perfil.php?idusuario=${user.idusuario}" class="feed-search-result-link">
-                                            ${fotoHtml}
-                                            ${placeholderHtml}
-                                            <div class="feed-search-result-info">
-                                                <span class="feed-search-result-name">${user.nome}</span>
-                                            </div>
-                                        </a>
-                                        ${!user.jaSeguindo ? `<a href="seguir.php?idseguido=${user.idusuario}" class="feed-btn-seguir-small">Seguir</a>` : ''}
-                                    </div>
-                                `;
+                                <div class="feed-search-result-item">
+                                    <a href="perfil.php?idusuario=${user.idusuario}" class="feed-search-result-link">
+                                        ${fotoHtml}
+                                        ${placeholderHtml}
+                                        <div class="feed-search-result-info">
+                                            <span class="feed-search-result-name">${user.nome}</span>
+                                        </div>
+                                    </a>
+                                    ${!user.jaSeguindo ? `<a href="seguir.php?idseguido=${user.idusuario}" class="feed-btn-seguir-small">Seguir</a>` : ''}
+                                </div>
+                            `;
                         });
 
                         searchResults.innerHTML = html;
@@ -331,149 +360,238 @@ $posts = PostDAO::listarPostsSeguidos($idusuario);
             }
         });
 
+        console.log('[v0] Configurando event listeners de curtidas');
         document.querySelectorAll('.btn-curtir').forEach(btn => {
-    btn.addEventListener('click', function() {
-        const postId = this.dataset.postId;
-        const formData = new FormData();
-        formData.append('idpost', postId);
-
-        fetch('curtir-post.php', {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                const svg = this.querySelector('svg');
-                const contador = this.querySelector('.contador-curtidas');
+            btn.addEventListener('click', function() {
+                const postId = this.dataset.postId;
+                console.log('[v0] Curtindo post:', postId);
                 
-                if (data.curtido) {
-                    this.classList.add('curtido');
-                    svg.setAttribute('fill', 'currentColor');
-                    this.title = 'Descurtir';
+                const formData = new FormData();
+                formData.append('idpost', postId);
+
+                fetch('curtir-post.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('[v0] Resposta curtida:', data);
+                    if (data.success) {
+                        const svg = this.querySelector('svg');
+                        const contador = this.querySelector('.contador-curtidas');
+                        
+                        if (data.curtido) {
+                            this.classList.add('curtido');
+                            svg.setAttribute('fill', 'currentColor');
+                            this.title = 'Descurtir';
+                        } else {
+                            this.classList.remove('curtido');
+                            svg.setAttribute('fill', 'none');
+                            this.title = 'Curtir';
+                        }
+                        
+                        contador.textContent = data.total > 0 ? data.total : '';
+                    }
+                })
+                .catch(error => console.error('[v0] Erro ao curtir:', error));
+            });
+        });
+
+        console.log('[v0] Configurando event listeners de comentários');
+        document.querySelectorAll('.btn-comentar').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const postId = this.dataset.postId;
+                const comentariosDiv = document.getElementById(`comentarios-${postId}`);
+                
+                console.log('[v0] Abrindo comentários do post:', postId);
+                
+                if (comentariosDiv.style.display === 'none') {
+                    // Carregar comentários
+                    fetch(`listar-comentarios.php?idpost=${postId}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log('[v0] Comentários recebidos:', data);
+                            if (data.success) {
+                                const listaComentarios = comentariosDiv.querySelector('.comentarios-lista');
+                                listaComentarios.innerHTML = '';
+                                
+                                data.comentarios.forEach(comentario => {
+                                    // Formatar data
+                                    let dataFormatada = 'Data não disponível';
+                                    if (comentario.data_criacao && comentario.data_criacao !== '0000-00-00 00:00:00') {
+                                        const timestamp = new Date(comentario.data_criacao).getTime();
+                                        if (timestamp > 0) {
+                                            dataFormatada = new Date(timestamp).toLocaleString('pt-BR', {
+                                                day: '2-digit',
+                                                month: '2-digit',
+                                                year: 'numeric',
+                                                hour: '2-digit',
+                                                minute: '2-digit'
+                                            });
+                                        }
+                                    }
+                                    
+                                    const btnExcluir = comentario.idusuario == <?= $idusuario ?> ? 
+                                        `<button class="comentario-delete" data-comentario-id="${comentario.idcomentario}" data-post-id="${postId}" title="Excluir comentário">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <polyline points="3 6 5 6 21 6"></polyline>
+                                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                                <line x1="10" y1="11" x2="10" y2="17"></line>
+                                                <line x1="14" y1="11" x2="14" y2="17"></line>
+                                            </svg>
+                                        </button>` : '';
+                                    
+                                    const comentarioHtml = `
+                                        <div class="comentario-item" data-comentario-id="${comentario.idcomentario}">
+                                            <div class="comentario-header">
+                                                ${comentario.foto_usuario ? 
+                                                    `<img src="uploads/${comentario.foto_usuario}" alt="${comentario.nome_usuario}" class="comentario-avatar">` :
+                                                    `<div class="comentario-avatar-placeholder">
+                                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                                            <circle cx="12" cy="7" r="4"></circle>
+                                                        </svg>
+                                                    </div>`}
+                                                <span class="comentario-autor">${comentario.nome_usuario}</span>
+                                                <span class="comentario-data">${dataFormatada}</span>
+                                                ${btnExcluir}
+                                            </div>
+                                            <p class="comentario-texto">${comentario.conteudo}</p>
+                                        </div>
+                                    `;
+                                    listaComentarios.innerHTML += comentarioHtml;
+                                });
+                                
+                                comentariosDiv.style.display = 'block';
+                                
+                                document.querySelectorAll('.comentario-delete').forEach(btn => {
+                                    btn.addEventListener('click', function() {
+                                        if (!confirm('Tem certeza que deseja excluir este comentário?')) {
+                                            return;
+                                        }
+                                        
+                                        const comentarioId = this.dataset.comentarioId;
+                                        const postId = this.dataset.postId;
+                                        
+                                        const formData = new FormData();
+                                        formData.append('idcomentario', comentarioId);
+                                        
+                                        fetch('excluir-comentario.php', {
+                                            method: 'POST',
+                                            body: formData
+                                        })
+                                        .then(response => response.json())
+                                        .then(data => {
+                                            if (data.success) {
+                                                // Remover comentário da lista
+                                                const comentarioItem = document.querySelector(`.comentario-item[data-comentario-id="${comentarioId}"]`);
+                                                comentarioItem.remove();
+                                                
+                                                // Atualizar contador
+                                                const btnComentar = document.querySelector(`.btn-comentar[data-post-id="${postId}"]`);
+                                                const contador = btnComentar.querySelector('.contador-comentarios');
+                                                const total = parseInt(contador.textContent || 0) - 1;
+                                                contador.textContent = total > 0 ? total : '';
+                                            } else {
+                                                alert(data.message || 'Erro ao excluir comentário');
+                                            }
+                                        })
+                                        .catch(error => console.error('Erro ao excluir comentário:', error));
+                                    });
+                                });
+                            }
+                        })
+                        .catch(error => console.error('[v0] Erro ao carregar comentários:', error));
                 } else {
-                    this.classList.remove('curtido');
-                    svg.setAttribute('fill', 'none');
-                    this.title = 'Curtir';
+                    comentariosDiv.style.display = 'none';
+                }
+            });
+        });
+
+        console.log('[v0] Configurando event listeners de envio de comentários');
+        document.querySelectorAll('.comentario-enviar').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const postId = this.dataset.postId;
+                const input = document.querySelector(`.comentario-input[data-post-id="${postId}"]`);
+                const conteudo = input.value.trim();
+                
+                console.log('[v0] Enviando comentário para post:', postId);
+                
+                if (!conteudo) {
+                    alert('Digite um comentário');
+                    return;
                 }
                 
-                contador.textContent = data.total > 0 ? data.total : '';
-            }
-        })
-        .catch(error => console.error('Erro ao curtir:', error));
-    });
-});
+                const formData = new FormData();
+                formData.append('idpost', postId);
+                formData.append('conteudo', conteudo);
+                
+                fetch('adicionar-comentario.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('[v0] Resposta adicionar comentário:', data);
+                    if (data.success) {
+                        input.value = '';
+                        
+                        // Atualizar contador
+                        const btnComentar = document.querySelector(`.btn-comentar[data-post-id="${postId}"]`);
+                        const contador = btnComentar.querySelector('.contador-comentarios');
+                        contador.textContent = data.total;
+                        
+                        // Recarregar comentários
+                        btnComentar.click();
+                        btnComentar.click();
+                    } else {
+                        alert(data.message || 'Erro ao adicionar comentário');
+                    }
+                })
+                .catch(error => console.error('[v0] Erro ao enviar comentário:', error));
+            });
+        });
 
-document.querySelectorAll('.btn-comentar').forEach(btn => {
-    btn.addEventListener('click', function() {
-        const postId = this.dataset.postId;
-        const comentariosDiv = document.getElementById(`comentarios-${postId}`);
+        document.querySelectorAll('.comentario-input').forEach(input => {
+            input.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    const postId = this.dataset.postId;
+                    const btnEnviar = document.querySelector(`.comentario-enviar[data-post-id="${postId}"]`);
+                    btnEnviar.click();
+                }
+            });
+        });
         
-        if (comentariosDiv.style.display === 'none') {
-            // Carregar comentários
-            fetch(`listar-comentarios.php?idpost=${postId}`)
+        console.log('[v0] Scripts do feed carregados com sucesso');
+        
+        document.querySelectorAll('.feed-post-delete').forEach(btn => {
+            btn.addEventListener('click', function() {
+                if (!confirm('Tem certeza que deseja excluir este post? Esta ação não pode ser desfeita.')) {
+                    return;
+                }
+                
+                const postId = this.dataset.postId;
+                
+                const formData = new FormData();
+                formData.append('idpost', postId);
+                
+                fetch('excluir-post.php', {
+                    method: 'POST',
+                    body: formData
+                })
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        const listaComentarios = comentariosDiv.querySelector('.comentarios-lista');
-                        listaComentarios.innerHTML = '';
-                        
-                        data.comentarios.forEach(comentario => {
-                            // Formatar data
-                            let dataFormatada = 'Data não disponível';
-                            if (comentario.data_criacao && comentario.data_criacao !== '0000-00-00 00:00:00') {
-                                const timestamp = new Date(comentario.data_criacao).getTime();
-                                if (timestamp > 0) {
-                                    dataFormatada = new Date(timestamp).toLocaleString('pt-BR', {
-                                        day: '2-digit',
-                                        month: '2-digit',
-                                        year: 'numeric',
-                                        hour: '2-digit',
-                                        minute: '2-digit'
-                                    });
-                                }
-                            }
-                            
-                            const comentarioHtml = `
-                                <div class="comentario-item">
-                                    <div class="comentario-header">
-                                        ${comentario.foto_usuario ? 
-                                            `<img src="uploads/${comentario.foto_usuario}" alt="${comentario.nome_usuario}" class="comentario-avatar">` :
-                                            `<div class="comentario-avatar-placeholder">
-                                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                                                    <circle cx="12" cy="7" r="4"></circle>
-                                                </svg>
-                                            </div>`
-                                        }
-                                        <span class="comentario-autor">${comentario.nome_usuario}</span>
-                                        <span class="comentario-data">${dataFormatada}</span>
-                                    </div>
-                                    <p class="comentario-texto">${comentario.conteudo}</p>
-                                </div>
-                            `;
-                            listaComentarios.innerHTML += comentarioHtml;
-                        });
-                        
-                        comentariosDiv.style.display = 'block';
+                        // Remover post da página
+                        const postElement = document.querySelector(`.feed-post[data-post-id="${postId}"]`);
+                        postElement.remove();
+                    } else {
+                        alert(data.message || 'Erro ao excluir post');
                     }
                 })
-                .catch(error => console.error('Erro ao carregar comentários:', error));
-        } else {
-            comentariosDiv.style.display = 'none';
-        }
-    });
-});
-
-document.querySelectorAll('.comentario-enviar').forEach(btn => {
-    btn.addEventListener('click', function() {
-        const postId = this.dataset.postId;
-        const input = document.querySelector(`.comentario-input[data-post-id="${postId}"]`);
-        const conteudo = input.value.trim();
-        
-        if (!conteudo) {
-            alert('Digite um comentário');
-            return;
-        }
-        
-        const formData = new FormData();
-        formData.append('idpost', postId);
-        formData.append('conteudo', conteudo);
-        
-        fetch('adicionar-comentario.php', {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                input.value = '';
-                
-                // Atualizar contador
-                const btnComentar = document.querySelector(`.btn-comentar[data-post-id="${postId}"]`);
-                const contador = btnComentar.querySelector('.contador-comentarios');
-                contador.textContent = data.total;
-                
-                // Recarregar comentários
-                btnComentar.click();
-                btnComentar.click();
-            } else {
-                alert(data.message || 'Erro ao adicionar comentário');
-            }
-        })
-        .catch(error => console.error('Erro ao enviar comentário:', error));
-    });
-});
-
-document.querySelectorAll('.comentario-input').forEach(input => {
-    input.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-            const postId = this.dataset.postId;
-            const btnEnviar = document.querySelector(`.comentario-enviar[data-post-id="${postId}"]`);
-            btnEnviar.click();
-        }
-    });
-});
+                .catch(error => console.error('Erro ao excluir post:', error));
+            });
+        });
     </script>
 </body>
 </html>

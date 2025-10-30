@@ -1,15 +1,20 @@
 <?php
-include "incs/valida-sessao.php";
+session_start();
 require_once "src/ComentarioDAO.php";
 
 header('Content-Type: application/json');
 
-$idpost = isset($_GET['idpost']) ? intval($_GET['idpost']) : 0;
-
-if ($idpost <= 0) {
-    echo json_encode(['success' => false, 'message' => 'Post inválido']);
+if (!isset($_SESSION['idusuario'])) {
+    echo json_encode(['success' => false, 'message' => 'Usuário não autenticado']);
     exit;
 }
+
+if (!isset($_GET['idpost'])) {
+    echo json_encode(['success' => false, 'message' => 'Post não especificado']);
+    exit;
+}
+
+$idpost = $_GET['idpost'];
 
 $comentarios = ComentarioDAO::listarPorPost($idpost);
 

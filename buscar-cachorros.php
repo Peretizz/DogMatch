@@ -89,7 +89,7 @@ if (!empty($termo_busca)) {
 
         <main class="feed-main" style="padding-top: 20px;">
             <div style="max-width: 700px; margin: 0 auto; padding: 0 20px;">
-                <h1 style="color: #DE720D; margin-bottom: 20px;">Encontre seu Amigo</h1>
+                <h1 style="color: #FFFFFF; margin-bottom: 20px;">Encontre seu Amigo</h1>
 
                 <form action="buscar-cachorros.php" method="GET" class="mb-4">
                     <div style="display: flex; gap: 10px; align-items: center; border: 1px solid #ccc; border-radius: 8px; padding: 5px;">
@@ -106,7 +106,7 @@ if (!empty($termo_busca)) {
 
                 <div class="search-results">
                     <?php if (empty($termo_busca)) { ?>
-                        <p style="text-align: center; margin-top: 50px; color: #888;">Digite um nome de cão ou raça para iniciar a busca.</p>
+                        <p style="text-align: center; margin-top: 50px; color: #FFFFFF;">Digite um nome de cão ou raça para iniciar a busca.</p>
                     <?php } elseif (empty($resultados)) { ?>
                         <p style="text-align: center; margin-top: 50px; color: #DE720D; font-weight: bold;">Nenhum cão encontrado para "<?= htmlspecialchars($termo_busca) ?>".</p>
                     <?php } else { ?>

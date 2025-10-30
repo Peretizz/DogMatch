@@ -205,8 +205,18 @@ if (isset($_GET['sucesso'])) {
                                         </div>
                                     <?php endif; ?>
                                     <div class="dog-info">
-                                        <strong><?= htmlspecialchars($cachorro['nome']) ?></strong>
-                                        <small><?= htmlspecialchars($cachorro['raca'] ?? 'Raça Desconhecida') ?></small>
+                                        <strong>
+                                            <?= htmlspecialchars($cachorro['nome']) ?>
+                                            <!-- Adicionando ícone de sexo -->
+                                            <span style="color: <?= ($cachorro['sexo'] ?? 'Macho') == 'Macho' ? '#4A90E2' : '#E91E63' ?>; margin-left: 5px;">
+                                                <?= ($cachorro['sexo'] ?? 'Macho') == 'Macho' ? '♂' : '♀' ?>
+                                            </span>
+                                        </strong>
+                                        <!-- Adicionando sexo na descrição -->
+                                        <small>
+                                            <?= htmlspecialchars($cachorro['raca'] ?? 'Raça Desconhecida') ?> | 
+                                            <?= htmlspecialchars($cachorro['sexo'] ?? 'Não informado') ?>
+                                        </small>
                                     </div>
                                 </div>
 

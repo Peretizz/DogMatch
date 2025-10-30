@@ -1,21 +1,21 @@
 <?php
-include "incs/valida-sessao.php";
+session_start();
 require_once "src/CurtidaDAO.php";
 
 header('Content-Type: application/json');
 
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    echo json_encode(['success' => false, 'message' => 'Método não permitido']);
+if (!isset($_SESSION['idusuario'])) {
+    echo json_encode(['success' => false, 'message' => 'Usuário não autenticado']);
     exit;
 }
 
-$idpost = isset($_POST['idpost']) ? intval($_POST['idpost']) : 0;
+if (!isset($_POST['idpost'])) {
+    echo json_encode(['success' => false, 'message' => 'Post não especificado']);
+    exit;
+}
+
+$idpost = $_POST['idpost'];
 $idusuario = $_SESSION['idusuario'];
-
-if ($idpost <= 0) {
-    echo json_encode(['success' => false, 'message' => 'Post inválido']);
-    exit;
-}
 
 // Verifica se já curtiu
 $jaCurtiu = CurtidaDAO::jaCurtiu($idpost, $idusuario);
@@ -23,19 +23,17 @@ $jaCurtiu = CurtidaDAO::jaCurtiu($idpost, $idusuario);
 if ($jaCurtiu) {
     // Descurtir
     $resultado = CurtidaDAO::descurtir($idpost, $idusuario);
-    $curtido = false;
 } else {
     // Curtir
     $resultado = CurtidaDAO::curtir($idpost, $idusuario);
-    $curtido = true;
 }
 
 if ($resultado) {
-    $totalCurtidas = CurtidaDAO::contarCurtidas($idpost);
+    $total = CurtidaDAO::contarCurtidas($idpost);
     echo json_encode([
         'success' => true,
-        'curtido' => $curtido,
-        'total' => $totalCurtidas
+        'curtido' => !$jaCurtiu,
+        'total' => $total
     ]);
 } else {
     echo json_encode(['success' => false, 'message' => 'Erro ao processar curtida']);

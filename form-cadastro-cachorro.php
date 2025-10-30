@@ -84,11 +84,20 @@ require_once "src/CachorroDAO.php";
                 </div>
             </div>
 
+            <!-- Alterado para buscar sexos do banco de dados e usar idsexo -->
             <div class="mb-3 col-md-12">
-                <label class="form-label">Carteira de vacinação</label>
-                <input type="file" class="form-control" name="vacinacao" accept="image/*">
+                <label class="form-label">Sexo</label>
+                <select name="idsexo" class="form-select form-control" required>
+                    <?php
+                    $sexos = CachorroDAO::listarSexos(); 
+                    foreach ($sexos as $sexo) {
+                        ?>
+                        <option value="<?= $sexo["idsexo"] ?>"><?= $sexo["sexo"] ?></option>
+                        <?php
+                    }
+                    ?>
+                </select>
             </div>
-
             <div class="mb-3 col-md-12">
                 <label class="form-label">Idade do cachorro</label>
                 <input type="number" class="form-control" name="idade" placeholder="insira a idade do cachorro" min="0"

@@ -223,10 +223,18 @@ $seguindo_count = SeguidoDAO::contarSeguindo($idusuario_perfil);
                                             alt="<?= htmlspecialchars($cachorro['nome']) ?>">
                                     <?php } ?>
                                     <div>
-                                        <strong><?= htmlspecialchars($cachorro['nome']) ?></strong><br>
-                                        <small style="color: #555;">Raça: <?= htmlspecialchars($cachorro['raca']) ?> | Idade:
-                                            <?= htmlspecialchars($cachorro['idade']) ?> anos | Peso:
-                                            <?= htmlspecialchars($cachorro['peso']) ?>kg</small>
+                                        <strong><?= htmlspecialchars($cachorro['nome']) ?></strong>
+                                        <!-- Adicionando exibição do sexo -->
+                                        <span style="color: <?= $cachorro['sexo'] == 'Macho' ? '#4A90E2' : '#E91E63' ?>; font-weight: bold; margin-left: 8px;">
+                                            <?= $cachorro['sexo'] == 'Macho' ? '♂' : '♀' ?>
+                                        </span>
+                                        <br>
+                                        <small style="color: #555;">
+                                            Raça: <?= htmlspecialchars($cachorro['raca']) ?> | 
+                                            Sexo: <?= htmlspecialchars($cachorro['sexo'] ?? 'Não informado') ?> | 
+                                            Idade: <?= htmlspecialchars($cachorro['idade']) ?> anos | 
+                                            Peso: <?= htmlspecialchars($cachorro['peso']) ?>kg
+                                        </small>
                                     </div>
                                 </div>
                             <?php } ?>
